@@ -135,14 +135,18 @@
   ];
   
   function rotateClips() {
-    const container = document.querySelector('.clips');
-    if (!container) return;
-    currentClip = (currentClip + 1) % clips.length;
-    container.innerHTML = `<iframe src="${clips[currentClip]}" title="King Chief Clip" allowfullscreen></iframe>`;
+  const iframes = document.querySelectorAll('.clips iframe');
+  iframes.forEach((iframe, index) => {
+    iframe.style.display = index === currentClip ? 'block' : 'none';
+  });
+  currentClip = (currentClip + 1) % clips.length;
+}" title="King Chief Clip" allowfullscreen></iframe>`;
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    setInterval(rotateClips, 10000); // Rotate every 10 seconds
+  rotateClips();
+  setInterval(rotateClips, 10000);
+}); // Rotate every 10 seconds
     rotateClips();
   });
 </script>
@@ -183,7 +187,11 @@
 
   <section>
     <h2>📹 Clips</h2>
-    <div class="clips"></div>
+    <div class="clips">
+  <iframe src="https://www.youtube.com/embed/U3o5rRRzmCU" title="King Chief Clip" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/C_JSab7RYNk" title="King Chief Clip" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/J6yTiVYjUyQ" title="King Chief Clip" allowfullscreen></iframe>
+</div>
   </section>
 
   <section>
