@@ -83,7 +83,7 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1rem;
     }
-    .clips video {
+    .clips iframe {
       width: 100%;
       height: auto;
       background: #000;
@@ -97,19 +97,19 @@
       justify-content: center;
     }
     .gallery img {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(255,255,255,0.1);
-  background-color: #0f0f0f;
-  mix-blend-mode: lighten;
-  transition: transform 0.3s ease;
-}
-.gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-}
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+      background-color: #0f0f0f;
+      mix-blend-mode: lighten;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
     footer {
       text-align: center;
       padding: 2rem;
@@ -129,7 +129,7 @@
         margin: 1rem;
       }
     }
-  @keyframes glow {
+    @keyframes glow {
       from {
         text-shadow: 0 0 5px #f4c542, 0 0 10px #f4c542;
       }
@@ -137,25 +137,25 @@
         text-shadow: 0 0 10px #f4c542, 0 0 20px #fff;
       }
     }
-  .gallery figure {
-  margin: 0;
-  text-align: center;
-}
-.gallery figcaption {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: #ccc;
-}
-</style>
+    .gallery figure {
+      margin: 0;
+      text-align: center;
+    }
+    .gallery figcaption {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
   <header style="position: relative; height: 180px;">
-  <img class="banner" src="banner.jpg" alt="King Chief Banner" style="width: 100%; height: 100%; object-fit: cover;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.6); padding: 1rem 2rem; border-radius: 8px; text-align: center;">
-    <h1 style="font-size: 2.2rem; color: #f4c542; margin: 0;"><i class='fas fa-crown'></i> King Chief</h1>
-    <p style="color: #fff; font-size: 0.95rem; margin: 0.5rem 0 0 0;">Official Site of Kick Streamer King Chief</p>
-  </div>
-</header>
+    <img class="banner" src="banner.jpg" alt="King Chief Banner" style="width: 100%; height: 100%; object-fit: cover;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.6); padding: 1rem 2rem; border-radius: 8px; text-align: center;">
+      <h1 style="font-size: 2.2rem; color: #f4c542; margin: 0;"><i class='fas fa-crown'></i> King Chief</h1>
+      <p style="color: #fff; font-size: 0.95rem; margin: 0.5rem 0 0 0;">Official Site of Kick Streamer King Chief</p>
+    </div>
+  </header>
 
   <section>
     <h2>🎮 About</h2>
@@ -183,35 +183,35 @@
   </section>
 
   <section>
-  <h2>📹 Top Shorts</h2>
-  <div class="clips">
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/fNsRaUvGv1I" title="Short 1" frameborder="0" allowfullscreen></iframe>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZDqJNySrRxA" title="Short 2" frameborder="0" allowfullscreen></iframe>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VKqyr7Yoo4c" title="Short 3" frameborder="0" allowfullscreen></iframe>
-  </div>
-</section>
+    <h2>📹 Top Shorts</h2>
+    <div class="clips">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/fNsRaUvGv1I" title="Short 1" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZDqJNySrRxA" title="Short 2" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/VKqyr7Yoo4c" title="Short 3" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
 
   <section>
-  <h2>👑 Featured Images</h2>
-  <div class="gallery" style="justify-content: center;">
-    <figure>
-      <img src="Untitled (1000 x 1000 px) (800 x 800 px).jpg" alt="King Chief OTB Blue Head" />
-      <figcaption>King Chief OTB Blue Head</figcaption>
-    </figure>
-    <figure>
-      <img src="Untitled (YouTube Thumbnail).jpg" alt="King Chief Headphones Pose" />
-      <figcaption>King Chief Headphones Pose</figcaption>
-    </figure>
-    <figure>
-      <img src="Untitled design.jpg" alt="King Chief Meme Face" />
-      <figcaption>King Chief Meme Face</figcaption>
-    </figure>
-    <figure>
-      <img src="Untitled design (1).jpg" alt="Bald King Chief" />
-      <figcaption>Bald King Chief</figcaption>
-    </figure>
-  </div>
-</section>
+    <h2>👑 Featured Images</h2>
+    <div class="gallery" style="justify-content: center;">
+      <figure>
+        <img src="king-chief-blue-head.jpg" alt="King Chief OTB Blue Head" />
+        <figcaption>King Chief OTB Blue Head</figcaption>
+      </figure>
+      <figure>
+        <img src="king-chief-headphones.jpg" alt="King Chief Headphones Pose" />
+        <figcaption>King Chief Headphones Pose</figcaption>
+      </figure>
+      <figure>
+        <img src="king-chief-meme.jpg" alt="King Chief Meme Face" />
+        <figcaption>King Chief Meme Face</figcaption>
+      </figure>
+      <figure>
+        <img src="king-chief-bald.jpg" alt="Bald King Chief" />
+        <figcaption>Bald King Chief</figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section>
     <h2>🗓️ Streaming Schedule</h2>
