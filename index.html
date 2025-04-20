@@ -90,16 +90,16 @@
       border: none;
     }
     .bubble {
-      position: absolute;
+      position: fixed;
       width: 120px;
       z-index: 5;
       opacity: 0.8;
     }
-    .bubble:nth-child(1) { top: 150px; left: 20px; transform: rotate(-10deg); }
-    .bubble:nth-child(2) { top: 600px; right: 50px; transform: rotate(15deg); }
-    .bubble:nth-child(3) { bottom: 200px; left: 40%; transform: rotate(-5deg); }
-    .bubble:nth-child(4) { bottom: 120px; right: 5%; transform: rotate(10deg); }
-    .bubble:nth-child(5) { top: 300px; left: 60%; transform: rotate(-8deg); }
+    .bubble1 { top: 150px; left: 20px; transform: rotate(-10deg); }
+    .bubble2 { top: 600px; right: 50px; transform: rotate(15deg); }
+    .bubble3 { bottom: 200px; left: 40%; transform: rotate(-5deg); }
+    .bubble4 { bottom: 120px; right: 5%; transform: rotate(10deg); }
+
     footer {
       text-align: center;
       padding: 2rem;
@@ -136,11 +136,11 @@
       <h1 style="font-size: 2.2rem; color: #f4c542; margin: 0;"><i class='fas fa-crown'></i> King Chief</h1>
       <p style="color: #fff; font-size: 0.95rem; margin: 0.5rem 0 0 0;">Official Site of Kick Streamer King Chief</p>
     </div>
-    <img src="king-chief-bald.jpg.jpg" class="bubble" alt="bubble1">
-    <img src="king-chief-blue-head.jpg.jpg" class="bubble" alt="bubble2">
-    <img src="king-chief-headphones.jpg.jpg" class="bubble" alt="bubble3">
-    <img src="king-chief-meme.jpg.jpg" class="bubble" alt="bubble4">
   </header>
+  <img src="king-chief-bald.jpg.jpg" class="bubble bubble1" alt="bubble1">
+  <img src="king-chief-blue-head.jpg.jpg" class="bubble bubble2" alt="bubble2">
+  <img src="king-chief-headphones.jpg.jpg" class="bubble bubble3" alt="bubble3">
+  <img src="king-chief-meme.jpg.jpg" class="bubble bubble4" alt="bubble4">
 
   <section>
     <h2>🎮 About</h2>
@@ -177,7 +177,7 @@
   </section>
 
   <section>
-    <h2>🔽️ Streaming Schedule</h2>
+    <h2>🔽r Streaming Schedule</h2>
     <p>King Chief usually goes live Monday–Sunday at 9:00 PM AEST. Follow on Kick for live notifications!</p>
   </section>
 
