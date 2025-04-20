@@ -6,27 +6,39 @@
   <title>King Chief – Official Website</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
       margin: 0;
       padding: 0;
     }
-    header, section {
-      padding: 2rem;
-    }
     header {
-      background: #222;
+      background: #1c1c1c;
       text-align: center;
+      padding: 3rem 2rem 2rem;
+      border-bottom: 2px solid #2f2f2f;
     }
     header h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
+      color: #f4c542;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
     }
     section {
-      border-bottom: 1px solid #333;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    section h2 {
+      border-bottom: 2px solid #333;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
     a {
-      color: #1db954;
+      color: #4cd137;
       text-decoration: none;
     }
     a:hover {
@@ -35,12 +47,22 @@
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
-    .clips iframe {
+    ul li {
+      margin: 0.3rem 0;
+    }
+    .clips {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .clips video, .clips iframe {
       width: 100%;
-      max-width: 560px;
-      height: 315px;
-      margin-bottom: 1rem;
+      height: 180px;
+      background: #000;
+      border-radius: 6px;
+      border: none;
     }
     .gallery {
       display: flex;
@@ -49,9 +71,17 @@
       justify-content: center;
     }
     .gallery img {
-      max-width: 250px;
+      max-width: 220px;
       height: auto;
       border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+      border-top: 1px solid #222;
     }
   </style>
 </head>
@@ -63,7 +93,7 @@
 
   <section>
     <h2>🎮 About</h2>
-    <p>King Chief is a 23-year-old Melbourne-based streamer, born on April 2, 2002. Known for energetic IRL content, raw gaming, and community vibes, he streams on Kick almost daily and posts his best moments on TikTok and YouTube.</p>
+    <p>King Chief is a 23-year-old Melbourne-based streamer, born on February 4, 2002. Known for energetic IRL content, raw gaming, and community vibes, he streams on Kick almost daily and posts his best moments on TikTok and YouTube.</p>
   </section>
 
   <section>
@@ -78,27 +108,21 @@
       <li>Twitter: <a href="https://twitter.com/ChiefzBlock" target="_blank">@ChiefzBlock</a></li>
       <li>Instagram: <a href="https://instagram.com/kingchiefx" target="_blank">@kingchiefx</a></li>
       <li>YouTube (Main): <a href="https://youtube.com/@KingChoif" target="_blank">@KingChoif</a></li>
-      <li>YouTube (Shorts): <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank">Shorts</a></li>
-      <li>YouTube (VODs): <a href="https://www.youtube.com/@KingChiefVods/featured" target="_blank">@KingChiefVods</a></li>
+      <li>YouTube Shorts: <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank">Shorts</a></li>
+      <li>YouTube VODs: <a href="https://www.youtube.com/@KingChiefVods/featured" target="_blank">@KingChiefVods</a></li>
       <li>TikTok: <a href="https://tiktok.com/@kingchoif" target="_blank">@kingchoif</a></li>
       <li>TikTok Clips: <a href="https://www.tiktok.com/@kingchieftv?lang=en" target="_blank">@kingchieftv</a></li>
       <li>Discord: <a href="https://discord.gg/JsUVx2XWkD" target="_blank">Join the Community</a></li>
     </ul>
   </section>
 
-  <section class="clips">
+  <section>
     <h2>📹 Top Clips</h2>
-    <iframe src="https://www.youtube.com/embed/BxvAWYI57SI" title="YouTube clip"></iframe>
-    <iframe src="https://www.youtube.com/embed/GQM63Wfobs4" title="YouTube clip"></iframe>
-    <iframe src="https://www.youtube.com/embed/vbCkcFB3k_U" title="YouTube clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01H0FNYC20EXHZ6C0TYZJVFDRN" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01HZCSV92B0SYKC64BKGFMSYBH" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01HVKTXKAFFGB3NWXY9RH194TX" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01JFQA2XHX2T3TZ08DX46N8CZH" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01HTFV6GBYB5152C3PBSFW7AVG" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01J5ZJPBKQR0553NJR09H8D8BG" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01HH4ND4GBJ5GCNTW8Y34F215X" title="Kick clip"></iframe>
-    <iframe src="https://kick.com/kingchief/clips/clip_01HN5G6BTNQNX7HDZ0ZJPFDB19" title="Kick clip"></iframe>
+    <div class="clips">
+      <iframe src="https://www.youtube.com/embed/BxvAWYI57SI" title="YouTube clip" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/GQM63Wfobs4" title="YouTube clip" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/vbCkcFB3k_U" title="YouTube clip" allowfullscreen></iframe>
+    </div>
   </section>
 
   <section>
@@ -117,5 +141,9 @@
     <h2>🗓️ Streaming Schedule</h2>
     <p>King Chief usually goes live Monday–Sunday at 9:00 PM AEST. Follow on Kick for live notifications!</p>
   </section>
+
+  <footer>
+    <p>© 2025 King Chief. All rights reserved.</p>
+  </footer>
 </body>
 </html>
