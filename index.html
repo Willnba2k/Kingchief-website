@@ -54,7 +54,7 @@
     section {
   background-color: rgba(255, 255, 255, 0.04);
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 2rem auto;
   border-radius: 14px;
   box-shadow: 0 0 20px rgba(244, 197, 66, 0.2), 0 0 40px rgba(255, 255, 255, 0.08);
@@ -90,7 +90,7 @@
     }
     .clips {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 1.5rem;
     }
     .clips iframe {
