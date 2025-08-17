@@ -8,6 +8,12 @@
   <!-- Favicon = your GIF logo -->
   <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&"/>
 
+  <!-- Perf hints (faster image loads) -->
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://api.rss2json.com">
+  <link rel="dns-prefetch" href="https://api.rss2json.com">
+
   <style>
     :root{
       --bg:#0f0f10; --panel:#17181b; --text:#fff; --muted:#b9b9b9;
@@ -54,15 +60,17 @@
       transition:transform .15s ease, box-shadow .15s ease;
     }
     .vod:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+
     .thumb{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb picture,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
     .playBadge{
       position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
       width:70px;height:70px;border-radius:50%;background:rgba(0,0,0,.55);
       display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.8)
     }
     .playBadge svg{width:30px;height:30px;fill:#fff;margin-left:3px}
-    .actions{display:flex;gap:8px;justify-content:center;padding:10px}
+
+    .meta{padding:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
     .btn{
       background:#2a2b30;color:#fff;border:1px solid rgba(255,255,255,.12);
       border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;
@@ -120,7 +128,9 @@
 
   <!-- VODS -->
   <main class="wrap">
-    <section id="vodGrid" class="vods" aria-label="VODs"></section>
+    <section id="vodGrid" class="vods" aria-label="VODs">
+      <!-- auto-filled below -->
+    </section>
   </main>
 
   <!-- LIGHTBOX MODAL -->
@@ -134,86 +144,118 @@
   <footer>© 2025 King Chief. All rights reserved.</footer>
 
   <script>
-    // ---- Data: your VOD YouTube IDs ----
-    const VIDS = [
-      "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
-      "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
-      "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
-      "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
-    ];
+    // ---------- CONFIG ----------
+    // RSS feed for @KingChiefVodz. If this ever changes, you can paste a new channel_id.
+    const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw"; // <-- update if needed
+    const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
 
-    const grid = document.getElementById('vodGrid');
+    // Using rss2json as a quick CORS-friendly JSON proxy of the RSS feed
+    const FEED_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED_URL);
+
+    // How many newest uploads to show:
+    const MAX_ITEMS = 24;
+
+    // ---------- DOM ----------
+    const grid  = document.getElementById('vodGrid');
     const modal = document.getElementById('ytModal');
     const frame = document.getElementById('ytFrame');
     const closeBtn = modal.querySelector('.close');
 
-    // Build cards with thumbnail + play + share buttons
-    VIDS.forEach(id => {
-      const card = document.createElement('div');
-      card.className = 'vod';
+    // ---------- Load feed and render ----------
+    (async function loadFeed(){
+      try {
+        const res = await fetch(FEED_API, { cache: "no-store" });
+        const data = await res.json();
 
-      const thumb = document.createElement('div');
-      thumb.className = 'thumb';
+        if (!data || !data.items) throw new Error("No feed items");
 
-      // Try maxres; fallback to hq on error
+        // Latest first
+        const items = data.items.slice(0, MAX_ITEMS);
+
+        grid.innerHTML = "";
+        items.forEach(item => {
+          // Extract video id from item.link (...watch?v=VIDEOID)
+          const videoId = (item.link && item.link.split("v=")[1]) || "";
+          const title   = item.title || "VOD";
+          addCard(videoId, title);
+        });
+      } catch (e) {
+        console.error("Feed load failed:", e);
+        grid.innerHTML = "<p style='color:#b9b9b9;text-align:center;width:100%'>Couldn’t load latest uploads right now.</p>";
+      }
+    })();
+
+    function addCard(id, title){
+      if(!id) return;
+      const card  = document.createElement('div'); card.className = 'vod';
+      const thumb = document.createElement('div'); thumb.className = 'thumb';
+
+      // Robust thumbnail with fallbacks (WebP maxres → JPG maxres → HQ JPG)
+      const picture = document.createElement('picture');
+
+      const srcWebp = document.createElement('source');
+      srcWebp.type = 'image/webp';
+      srcWebp.srcset = `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
+
+      const srcJpgMax = document.createElement('source');
+      srcJpgMax.type = 'image/jpeg';
+      srcJpgMax.srcset = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
       const img = document.createElement('img');
-      img.alt = 'VOD thumbnail';
+      img.alt = title;
       img.loading = 'lazy';
-      img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-      img.onerror = function(){ this.onerror=null; this.src=`https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
-      thumb.appendChild(img);
+      img.decoding = 'async';
+      img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+      img.onerror = function(){ this.onerror=null; this.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`; };
+      img.style.opacity = '0'; img.style.transition = 'opacity .25s ease';
+      img.addEventListener('load', ()=> img.style.opacity = '1');
+
+      picture.append(srcWebp, srcJpgMax, img);
+      thumb.appendChild(picture);
 
       const play = document.createElement('div');
       play.className = 'playBadge';
       play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
       thumb.appendChild(play);
 
-      const actions = document.createElement('div');
-      actions.className = 'actions';
+      // Click thumbnail to open modal
+      thumb.addEventListener('click', ()=> openVideo(id));
 
-      const openBtn = document.createElement('button');
-      openBtn.className = 'btn';
-      openBtn.textContent = 'Play';
-      openBtn.addEventListener('click', () => openVideo(id));
+      // Buttons row
+      const meta = document.createElement('div'); meta.className = 'meta';
+      const openBtn = document.createElement('button'); openBtn.className = 'btn'; openBtn.textContent = 'Play';
+      openBtn.addEventListener('click', ()=> openVideo(id));
 
-      const shareBtn = document.createElement('button');
-      shareBtn.className = 'btn';
-      shareBtn.textContent = 'Share';
+      const shareBtn = document.createElement('button'); shareBtn.className = 'btn'; shareBtn.textContent = 'Share';
       shareBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const url = `https://youtu.be/${id}`;
         try {
           if (navigator.share) {
-            await navigator.share({ title: 'King Chief VOD', url });
+            await navigator.share({ title, url });
           } else {
             await navigator.clipboard.writeText(url);
             alert('Copied: ' + url);
           }
-        } catch(_) {
-          // ignore cancel
-        }
+        } catch(_) {}
       });
 
-      actions.append(openBtn, shareBtn);
-      card.append(thumb, actions);
-      // Clicking the thumbnail also opens the modal
-      thumb.addEventListener('click', () => openVideo(id));
-
+      meta.append(openBtn, shareBtn);
+      card.append(thumb, meta);
       grid.appendChild(card);
-    });
+    }
 
+    // ---------- Modal controls ----------
     function openVideo(id){
       frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
     }
-
     function closeModal(){
       modal.classList.remove('show');
       frame.src = '';
       document.body.style.overflow = '';
     }
-
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
     window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
