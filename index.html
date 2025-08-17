@@ -22,13 +22,11 @@
     header img.banner { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; filter: brightness(0.6); }
     header div { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
     header h1 {
-      font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--brand); margin: 0;
-      text-shadow: 0 0 10px var(--brand), 0 0 20px var(--brand), 0 0 30px #fff;
-      animation: glow 2s ease-in-out infinite alternate;
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      margin: 0;
+      display: flex; justify-content: center; align-items: center;
     }
     header h1 img.logo-gif {
-      max-height: 80px;
+      max-height: 180px;
     }
     header p { font-size: 1.1rem; color: #fff; }
 
@@ -56,11 +54,10 @@
     footer { text-align: center; padding: 2rem; font-size: .95rem; color: #bbb; background: linear-gradient(45deg, #0d0d0d, #1a1a1a); border-top: 1px solid #333; box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05); }
 
     @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
       .clips iframe { height: 400px; }
       .vods-fallback iframe { height: 420px; }
+      header h1 img.logo-gif { max-height: 120px; }
     }
-    @keyframes glow { from { text-shadow: 0 0 10px var(--brand); } to { text-shadow: 0 0 20px #fff; } }
   </style>
 </head>
 <body>
@@ -69,7 +66,6 @@
     <div>
       <h1>
         <img class="logo-gif" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief Logo">
-        King Chief
       </h1>
       <p>Official Site of Kick Streamer King Chief</p>
     </div>
