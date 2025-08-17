@@ -7,130 +7,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    :root {
+      --brand:#f4c542; /* gold */
+      --bg1:#0f0f0f; --bg2:#1f1f1f; --text:#f0f0f0; --muted:#bbb; --accent:#00ffae;
     }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1f1f1f);
-      color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      margin: 0; padding: 0; overflow-x: hidden;
     }
-    header {
-      position: relative;
-      background-color: #000;
-      overflow: hidden;
-      border-bottom: 4px solid #f4c542;
-    }
-    header img.banner {
-      width: 100%;
-      height: auto;
-      max-height: 300px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.6);
-    }
-    header div {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
+    header { position: relative; background-color: #000; overflow: hidden; border-bottom: 4px solid var(--brand); }
+    header img.banner { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; filter: brightness(0.6); }
+    header div { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
     header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3rem;
-  color: #f4c542;
-  margin: 0;
-  text-shadow: 0 0 10px #f4c542, 0 0 20px #f4c542, 0 0 30px #fff;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-    header p {
-      font-size: 1.1rem;
-      color: #fff;
+      font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--brand); margin: 0;
+      text-shadow: 0 0 10px var(--brand), 0 0 20px var(--brand), 0 0 30px #fff;
+      animation: glow 2s ease-in-out infinite alternate;
     }
-    section {
-  background-color: rgba(255, 255, 255, 0.04);
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 2rem auto;
-  border-radius: 14px;
-  box-shadow: 0 0 20px rgba(244, 197, 66, 0.2), 0 0 40px rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s ease;
-}
-    section h2 {
-      border-bottom: 2px solid #f4c542;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-      font-family: 'Orbitron', sans-serif;
-      color: #f4c542;
-    }
-    a {
-      color: #00ffae;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li {
-      margin: 0.75rem 0;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    ul li i {
-      color: #f4c542;
-      min-width: 20px;
-    }
-    .clips {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .clips iframe {
-      width: 100%;
-      height: 560px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.1);
-      border: none;
-    }
-    footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.95rem;
-  color: #bbb;
-  background: linear-gradient(45deg, #0d0d0d, #1a1a1a);
-  border-top: 1px solid #333;
-  box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05);
-}
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      .clips iframe {
-        height: 400px;
-      }
-    }
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #f4c542;
-      }
-      to {
-        text-shadow: 0 0 20px #fff;
-      }
-    }
-  </style>
+    header p { font-size: 1.1rem; color: #fff; }
 
+    section {
+      background-color: rgba(255, 255, 255, 0.04);
+      padding: 2rem; max-width: 1200px; margin: 2rem auto; border-radius: 14px;
+      box-shadow: 0 0 20px rgba(244, 197, 66, 0.2), 0 0 40px rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease;
+    }
+    section h2 { border-bottom: 2px solid var(--brand); padding-bottom: .5rem; margin-bottom: 1.5rem; font-family: 'Orbitron', sans-serif; color: var(--brand); }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    ul { list-style: none; padding: 0; }
+    ul li { margin: .75rem 0; display: flex; align-items: center; gap: .5rem; }
+    ul li i { color: var(--brand); min-width: 20px; }
+
+    .clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .clips iframe { width: 100%; height: 560px; border-radius: 10px; box-shadow: 0 0 12px rgba(255,255,255,0.1); border: none; }
+
+    /* VODs grid */
+    .vods-fallback iframe { width: 100%; height: 600px; border: none; border-radius: 12px; box-shadow: 0 0 12px rgba(255,255,255,0.1); }
+
+    footer { text-align: center; padding: 2rem; font-size: .95rem; color: #bbb; background: linear-gradient(45deg, #0d0d0d, #1a1a1a); border-top: 1px solid #333; box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05); }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      .clips iframe { height: 400px; }
+      .vods-fallback iframe { height: 420px; }
+    }
+    @keyframes glow { from { text-shadow: 0 0 10px var(--brand); } to { text-shadow: 0 0 20px #fff; } }
+  </style>
 </head>
 <body>
   <header>
-    <img class="banner" src="banner.jpg" alt="King Chief Banner">
+    <img class="banner" src="banner.jpg" alt="King Chief Banner" loading="lazy">
     <div>
       <h1><i class='fas fa-crown'></i> King Chief</h1>
       <p>Official Site of Kick Streamer King Chief</p>
@@ -144,31 +75,45 @@
 
   <section>
     <h2>💚 Donate</h2>
-    <p>You can support King Chief by tipping through <a href="https://streamlabs.com/willnba2k/tip" target="_blank">Streamlabs</a> or using the donation links in his <a href="https://www.kick.com/kingchief" target="_blank">Kick profile</a>.</p>
+    <p>You can support King Chief by tipping through
+      <a href="https://streamlabs.com/willnba2k/tip" target="_blank" rel="noopener">Streamlabs</a>
+      or using the donation links in his <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">Kick profile</a>.
+    </p>
   </section>
 
   <section>
     <h2>🔗 Links</h2>
     <ul>
-      <li><i class="fab fa-kickstarter"></i> <a href="https://www.kick.com/kingchief" target="_blank">kick.com/kingchief</a></li>
-      <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/ChiefzBlock" target="_blank">@ChiefzBlock</a></li>
-      <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/kingchiefx" target="_blank">@kingchiefx</a></li>
-      <li><i class="fab fa-youtube"></i> <a href="https://youtube.com/@KingChoif" target="_blank">@KingChoif</a></li>
-      <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank">Shorts</a></li>
-      <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@KingChiefVods/featured" target="_blank">@KingChiefVods</a></li>
-      <li><i class="fab fa-tiktok"></i> <a href="https://tiktok.com/@kingchoif" target="_blank">@kingchoif</a></li>
-      <li><i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/@kingchieftv?lang=en" target="_blank">@kingchieftv</a></li>
-      <li><i class="fab fa-discord"></i> <a href="https://discord.gg/JsUVx2XWkD" target="_blank">Join the Community</a></li>
+      <li><i class="fa-solid fa-link"></i> <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">kick.com/kingchief</a></li>
+      <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener">@ChiefzBlock</a></li>
+      <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener">@kingchiefx</a></li>
+      <li><i class="fab fa-youtube"></i> <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener">@KingChoif</a></li>
+      <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank" rel="noopener">Shorts</a></li>
+      <li><i class="fab fa-tiktok"></i> <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener">@kingchoif</a></li>
+      <li><i class="fab fa-discord"></i> <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener">Join the Community</a></li>
     </ul>
   </section>
 
   <section>
-    <h2>📹 Clips</h2>
+    <h2>📹 Featured Clips</h2>
     <div class="clips">
-  <iframe src="https://www.youtube.com/embed/U3o5rRRzmCU" title="King Chief Clip" allowfullscreen></iframe>
-  <iframe src="https://www.youtube.com/embed/C_JSab7RYNk" title="King Chief Clip" allowfullscreen></iframe>
-  <iframe src="https://www.youtube.com/embed/J6yTiVYjUyQ" title="King Chief Clip" allowfullscreen></iframe>
-</div>
+      <iframe src="https://www.youtube.com/embed/U3o5rRRzmCU" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/C_JSab7RYNk" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/J6yTiVYjUyQ" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- VODs section using @KingChoif streams -->
+  <section id="vods">
+    <h2>📺 VODs – YouTube Streams</h2>
+    <div class="vods-fallback">
+      <iframe
+        title="KingChoif – Streams"
+        src="https://www.youtube.com/embed/videoseries?list=PL9fnq3v46zcQkQg_rI1lZJQ2aH5H9MgKy&rel=0&modestbranding=1"
+        loading="lazy" allowfullscreen>
+      </iframe>
+      <p class="note">This playlist shows King Chief's past livestreams from his @KingChoif YouTube channel.</p>
+    </div>
   </section>
 
   <section>
