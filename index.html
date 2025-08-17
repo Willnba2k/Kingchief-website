@@ -35,8 +35,9 @@
     .socials{display:flex;gap:.6rem;align-items:center}
     .socials a{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
     .socials a:hover{background:var(--brand);border-color:var(--brand)}
-    .socials i{font-size:16px;color:#ddd}
-    .socials a:hover i{color:#111}
+    $1
+    .socials svg{width:18px;height:18px;display:block}
+    .socials a:hover svg path{filter:none}
     @media (max-width:640px){.socials{display:none}}
 
     /* Page sections */
@@ -85,7 +86,11 @@
         <button class="tab" data-target="#schedule">Schedule</button>
       </div>
       <div class="socials">
-        <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick"><img src="https://kick.com/img/kick-logo.svg" alt="Kick" style="width:18px;height:18px;filter:invert(85%);"></a>
+        <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Kick">
+            <path fill="#00ff99" d="M139.2 67.1c-24.9 0-45 20.1-45 45v287.7c0 24.9 20.1 45 45 45h233.6c24.9 0 45-20.1 45-45V112.1c0-24.9-20.1-45-45-45H139.2zm0 30h233.6c8.4 0 15 6.6 15 15v287.7c0 8.4-6.6 15-15 15H139.2c-8.4 0-15-6.6-15-15V112.1c0-8.4 6.6-15 15-15zm34.8 45v227.7h30V287h34.5l43.5 82.8h33.6l-47.7-90.3c13.2-4.2 24.3-12 32.7-23.1 8.4-11.1 12.6-24.9 12.6-41.1 0-21.9-7.2-39.3-21.9-52.2-14.7-12.9-35.1-19.5-61.2-19.5H174zm30 30h52.2c15.3 0 26.7 3.6 34.2 10.2 7.5 6.6 11.1 15.9 11.1 27.9 0 12-3.6 21.3-11.1 27.9-7.5 6.6-18.9 10.2-34.2 10.2H204V172.1z"/>
+          </svg>
+        </a>
         <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
         <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
