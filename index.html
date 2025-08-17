@@ -18,7 +18,7 @@
 
     /* HERO: banner with centered GIF logo */
     .hero{
-      position:relative;width:100%;height:200px; /* tweak if you want */
+      position:relative;width:100%;height:200px;
       overflow:hidden;border-bottom:4px solid var(--brand);
     }
     .hero img.banner{
@@ -33,7 +33,7 @@
       .hero img.centerLogo{height:100px}
     }
 
-    /* Social icons (white outline/glow so they’re visible) */
+    /* Social icons (white outline/glow) */
     .socials{
       display:flex;justify-content:center;align-items:center;gap:14px;
       background:#111;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
@@ -45,10 +45,7 @@
       transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
     .socials a:hover{transform:translateY(-1px);background:#1d1d1d;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
-    .socials img{
-      width:22px;height:22px;display:block;
-      filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #fff); /* white outline */
-    }
+    .socials img{width:22px;height:22px;display:block;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #fff)}
 
     /* Content wrapper */
     .wrap{max-width:1240px;margin:18px auto;padding:0 14px}
@@ -60,12 +57,42 @@
     @media (min-width:1200px){ .vods{grid-template-columns:repeat(4,1fr)} }
 
     .vod{
+      position:relative;
       background:var(--panel);border:1px solid rgba(255,255,255,.08);
       border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25);
-      transition:transform .15s ease, box-shadow .15s ease;
+      transition:transform .15s ease, box-shadow .15s ease; cursor:pointer;
     }
     .vod:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
     .vod iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+
+    /* Transparent overlay button to capture click (so iframe clicks open modal) */
+    .vod .hit{
+      position:absolute;inset:0; background:transparent; border:0; cursor:pointer;
+    }
+
+    /* Lightbox modal */
+    .modal{
+      position:fixed; inset:0; background:rgba(0,0,0,.85);
+      display:none; align-items:center; justify-content:center; z-index:1000;
+      padding:20px;
+    }
+    .modal.show{ display:flex }
+    .modal-inner{
+      position:relative; width:90vw; max-width:1100px; aspect-ratio:16/9;
+      background:#000; border-radius:12px; overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.08) inset;
+    }
+    .modal iframe{ width:100%; height:100%; border:0; display:block; }
+    .close{
+      position:absolute; top:-46px; right:0;
+      background:#fff; color:#000; border:0; border-radius:999px;
+      width:38px; height:38px; font-size:20px; font-weight:700; cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,.4);
+    }
+    @media (max-width:640px){
+      .modal-inner{ width:96vw; }
+      .close{ top:-44px; }
+    }
 
     footer{color:var(--muted);text-align:center;padding:24px 0}
   </style>
@@ -104,31 +131,76 @@
   <main class="wrap">
     <section class="vods" aria-label="VODs">
       <!-- (22) Provided VODs -->
-      <div class="vod"><iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" loading="lazy" allowfullscreen title="VOD 1"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" loading="lazy" allowfullscreen title="VOD 2"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" loading="lazy" allowfullscreen title="VOD 3"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" loading="lazy" allowfullscreen title="VOD 4"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/cbQofKGnqeM" loading="lazy" allowfullscreen title="VOD 5"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" loading="lazy" allowfullscreen title="VOD 6"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" loading="lazy" allowfullscreen title="VOD 7"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" loading="lazy" allowfullscreen title="VOD 8"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" loading="lazy" allowfullscreen title="VOD 9"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/oYcgSVNOe70" loading="lazy" allowfullscreen title="VOD 10"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/Rx4B8hoptBU" loading="lazy" allowfullscreen title="VOD 11"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/unPPNeVQ3oY" loading="lazy" allowfullscreen title="VOD 12"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/XjRv9s5I7oc" loading="lazy" allowfullscreen title="VOD 13"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/G1hoHYYitV4" loading="lazy" allowfullscreen title="VOD 14"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/RNDgzcxIBdM" loading="lazy" allowfullscreen title="VOD 15"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/1-fnXPqTHCU" loading="lazy" allowfullscreen title="VOD 16"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/f-Tk9YtNaN8" loading="lazy" allowfullscreen title="VOD 17"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/oBqgCiqf1KQ" loading="lazy" allowfullscreen title="VOD 18"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/lUvvyfQIbfs" loading="lazy" allowfullscreen title="VOD 19"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/OaE2r5Q_sHo" loading="lazy" allowfullscreen title="VOD 20"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/MHlZhGa5iTg" loading="lazy" allowfullscreen title="VOD 21"></iframe></div>
-      <div class="vod"><iframe src="https://www.youtube.com/embed/5pf8wR_wKhM" loading="lazy" allowfullscreen title="VOD 22"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" loading="lazy" allowfullscreen title="VOD 1"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" loading="lazy" allowfullscreen title="VOD 2"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" loading="lazy" allowfullscreen title="VOD 3"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" loading="lazy" allowfullscreen title="VOD 4"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/cbQofKGnqeM" loading="lazy" allowfullscreen title="VOD 5"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" loading="lazy" allowfullscreen title="VOD 6"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" loading="lazy" allowfullscreen title="VOD 7"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" loading="lazy" allowfullscreen title="VOD 8"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" loading="lazy" allowfullscreen title="VOD 9"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/oYcgSVNOe70" loading="lazy" allowfullscreen title="VOD 10"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/Rx4B8hoptBU" loading="lazy" allowfullscreen title="VOD 11"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/unPPNeVQ3oY" loading="lazy" allowfullscreen title="VOD 12"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/XjRv9s5I7oc" loading="lazy" allowfullscreen title="VOD 13"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/G1hoHYYitV4" loading="lazy" allowfullscreen title="VOD 14"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/RNDgzcxIBdM" loading="lazy" allowfullscreen title="VOD 15"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/1-fnXPqTHCU" loading="lazy" allowfullscreen title="VOD 16"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/f-Tk9YtNaN8" loading="lazy" allowfullscreen title="VOD 17"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/oBqgCiqf1KQ" loading="lazy" allowfullscreen title="VOD 18"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/lUvvyfQIbfs" loading="lazy" allowfullscreen title="VOD 19"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/OaE2r5Q_sHo" loading="lazy" allowfullscreen title="VOD 20"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/MHlZhGa5iTg" loading="lazy" allowfullscreen title="VOD 21"></iframe><button class="hit" aria-label="Open video"></button></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/5pf8wR_wKhM" loading="lazy" allowfullscreen title="VOD 22"></iframe><button class="hit" aria-label="Open video"></button></div>
     </section>
   </main>
 
+  <!-- LIGHTBOX MODAL -->
+  <div id="ytModal" class="modal" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal-inner">
+      <button class="close" aria-label="Close">✕</button>
+      <iframe id="ytFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
   <footer>© 2025 King Chief. All rights reserved.</footer>
+
+  <script>
+    // Helper to grab the YouTube ID from an embed URL
+    function getIdFromEmbedSrc(src){
+      // matches ".../embed/VIDEOID" possibly with params
+      const m = src.match(/\\/embed\\/([^?&]+)/);
+      return m ? m[1] : null;
+    }
+
+    const modal = document.getElementById('ytModal');
+    const frame = document.getElementById('ytFrame');
+    const closeBtn = modal.querySelector('.close');
+
+    // Open modal on any VOD click
+    document.querySelectorAll('.vod').forEach(v => {
+      v.addEventListener('click', () => {
+        const iframe = v.querySelector('iframe');
+        const id = getIdFromEmbedSrc(iframe.src);
+        if(!id) return;
+
+        // Larger autoplaying player in modal
+        frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0`;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // prevent background scroll
+      });
+    });
+
+    // Close handlers
+    function closeModal(){
+      modal.classList.remove('show');
+      frame.src = ''; // stop playback
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+  </script>
 </body>
 </html>
