@@ -8,7 +8,7 @@
   <!-- Favicon = your GIF logo -->
   <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&"/>
 
-  <!-- Perf hints (faster image loads) -->
+  <!-- Perf hints -->
   <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="dns-prefetch" href="https://i.ytimg.com">
   <link rel="preconnect" href="https://api.rss2json.com">
@@ -129,7 +129,7 @@
   <!-- VODS -->
   <main class="wrap">
     <section id="vodGrid" class="vods" aria-label="VODs">
-      <!-- auto-filled below -->
+      <!-- auto + manual will be rendered here -->
     </section>
   </main>
 
@@ -145,15 +145,19 @@
 
   <script>
     // ---------- CONFIG ----------
-    // RSS feed for @KingChiefVodz. If this ever changes, you can paste a new channel_id.
-    const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw"; // <-- update if needed
+    // New auto-updating channel: @KingChiefVodz
+    const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw";
     const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
-
-    // Using rss2json as a quick CORS-friendly JSON proxy of the RSS feed
     const FEED_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED_URL);
+    const MAX_AUTO = 24; // how many of the newest to auto-add
 
-    // How many newest uploads to show:
-    const MAX_ITEMS = 24;
+    // Old manual VODs (keep these!)
+    const OLD_VIDS = [
+      "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
+      "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
+      "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
+      "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
+    ];
 
     // ---------- DOM ----------
     const grid  = document.getElementById('vodGrid');
@@ -161,32 +165,8 @@
     const frame = document.getElementById('ytFrame');
     const closeBtn = modal.querySelector('.close');
 
-    // ---------- Load feed and render ----------
-    (async function loadFeed(){
-      try {
-        const res = await fetch(FEED_API, { cache: "no-store" });
-        const data = await res.json();
-
-        if (!data || !data.items) throw new Error("No feed items");
-
-        // Latest first
-        const items = data.items.slice(0, MAX_ITEMS);
-
-        grid.innerHTML = "";
-        items.forEach(item => {
-          // Extract video id from item.link (...watch?v=VIDEOID)
-          const videoId = (item.link && item.link.split("v=")[1]) || "";
-          const title   = item.title || "VOD";
-          addCard(videoId, title);
-        });
-      } catch (e) {
-        console.error("Feed load failed:", e);
-        grid.innerHTML = "<p style='color:#b9b9b9;text-align:center;width:100%'>Couldn’t load latest uploads right now.</p>";
-      }
-    })();
-
+    // Utility: create a VOD card
     function addCard(id, title){
-      if(!id) return;
       const card  = document.createElement('div'); card.className = 'vod';
       const thumb = document.createElement('div'); thumb.className = 'thumb';
 
@@ -202,7 +182,7 @@
       srcJpgMax.srcset = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
 
       const img = document.createElement('img');
-      img.alt = title;
+      img.alt = title || 'VOD';
       img.loading = 'lazy';
       img.decoding = 'async';
       img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
@@ -232,7 +212,7 @@
         const url = `https://youtu.be/${id}`;
         try {
           if (navigator.share) {
-            await navigator.share({ title, url });
+            await navigator.share({ title: title || 'King Chief VOD', url });
           } else {
             await navigator.clipboard.writeText(url);
             alert('Copied: ' + url);
@@ -245,7 +225,7 @@
       grid.appendChild(card);
     }
 
-    // ---------- Modal controls ----------
+    // Open/Close modal
     function openVideo(id){
       frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
       modal.classList.add('show');
@@ -259,6 +239,33 @@
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
     window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    // ---------- Build list: new (auto) first, then old (manual) ----------
+    (async function buildVods(){
+      const seen = new Set();
+      // 1) Auto list from channel
+      try {
+        const res = await fetch(FEED_API, { cache: "no-store" });
+        const data = await res.json();
+        const items = (data.items || []).slice(0, MAX_AUTO);
+        // newest first
+        for (const item of items) {
+          const id = (item.link && item.link.split("v=")[1]) || "";
+          if (!id || seen.has(id)) continue;
+          seen.add(id);
+          addCard(id, item.title || 'VOD');
+        }
+      } catch (e) {
+        console.warn('Auto feed failed (showing manual only):', e);
+      }
+
+      // 2) Manual legacy uploads (only if not already added)
+      for (const id of OLD_VIDS) {
+        if (seen.has(id)) continue;
+        seen.add(id);
+        addCard(id, 'VOD');
+      }
+    })();
   </script>
 </body>
 </html>
