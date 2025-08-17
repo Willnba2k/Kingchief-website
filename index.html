@@ -25,6 +25,10 @@
       font-family: 'Orbitron', sans-serif; font-size: 3rem; color: var(--brand); margin: 0;
       text-shadow: 0 0 10px var(--brand), 0 0 20px var(--brand), 0 0 30px #fff;
       animation: glow 2s ease-in-out infinite alternate;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    }
+    header h1 img.logo-gif {
+      max-height: 80px;
     }
     header p { font-size: 1.1rem; color: #fff; }
 
@@ -63,7 +67,10 @@
   <header>
     <img class="banner" src="banner.jpg" alt="King Chief Banner" loading="lazy">
     <div>
-      <h1><i class='fas fa-crown'></i> King Chief</h1>
+      <h1>
+        <img class="logo-gif" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief Logo">
+        King Chief
+      </h1>
       <p>Official Site of Kick Streamer King Chief</p>
     </div>
   </header>
