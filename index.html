@@ -94,6 +94,7 @@
       max-width: 800px;
       height: 55%;
       border: none;
+      background: #000;
     }
     .popup .close {
       position: absolute;
@@ -136,13 +137,13 @@
       <div class="play-button">▶</div>
       <button class="share">Share</button>
     </div>
-    <!-- repeat pattern for all other videos -->
+    <!-- repeat for more videos -->
   </div>
 
   <!-- Popup Overlay -->
   <div class="popup" id="videoPopup">
     <span class="close" onclick="closePopup()">&times;</span>
-    <iframe id="popupIframe" src="" allowfullscreen></iframe>
+    <iframe id="popupIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
 
   <script>
@@ -154,26 +155,29 @@
       const vid = vod.dataset.id;
       const shareBtn = vod.querySelector('.share');
 
+      // Clicking anywhere on the thumbnail opens popup
       vod.addEventListener('click', (e) => {
-        if (e.target.classList.contains('share')) return; // prevent popup on share click
+        if (e.target.classList.contains('share')) return; // don't trigger on share button
         popup.style.display = 'flex';
-        popupIframe.src = "https://www.youtube.com/embed/" + vid + "?autoplay=1";
+        popupIframe.src = "https://www.youtube.com/embed/" + vid + "?autoplay=1&rel=0";
       });
 
-      shareBtn.addEventListener('click', async () => {
+      // Share button copies link
+      shareBtn.addEventListener('click', async (e) => {
+        e.stopPropagation(); // prevent popup
         const link = "https://youtu.be/" + vid;
         try {
           await navigator.clipboard.writeText(link);
           alert("Copied: " + link);
         } catch (err) {
-          alert("Failed to copy, here’s the link: " + link);
+          alert("Copy failed, here’s the link: " + link);
         }
       });
     });
 
     function closePopup() {
       popup.style.display = 'none';
-      popupIframe.src = "";
+      popupIframe.src = ""; // stop video
     }
 
     // Close when clicking outside video
