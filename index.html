@@ -4,69 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>King Chief — Official Website</title>
-  <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" />
+
+  <!-- Favicon = your GIF logo -->
+  <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&"/>
+
   <style>
-    :root{ --brand:#f4c542; --accent:#00ffae; --bg1:#0f0f0f; --bg2:#1f1f1f; --text:#f0f0f0; --muted:#a9a9a9; --card:rgba(255,255,255,.05); }
+    :root{
+      --bg:#0f0f10; --panel:#17181b; --text:#fff; --muted:#b9b9b9;
+      --brand:#f4c542;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,Arial,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-    /* Header banner with centered GIF logo */
-    .hero{position:relative;width:100%;}
-    .hero img.banner{width:100%;height:180px;object-fit:cover;display:block}
-    .hero img.center-logo{position:absolute;inset:0;margin:auto;top:50%;left:50%;transform:translate(-50%,-50%);height:90px;width:auto;filter:drop-shadow(0 0 10px rgba(0,0,0,.6));}
+    /* HERO: banner with centered GIF logo */
+    .hero{
+      position:relative;width:100%;height:200px; /* tweak if you want */
+      overflow:hidden;border-bottom:4px solid var(--brand);
+    }
+    .hero img.banner{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .hero img.centerLogo{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      height:130px;width:auto;filter:drop-shadow(0 0 6px rgba(0,0,0,.6));
+    }
+    @media (max-width:640px){
+      .hero{height:180px}
+      .hero img.centerLogo{height:100px}
+    }
 
-    /* Socials row */
-    .socials{display:flex;justify-content:center;gap:16px;align-items:center;padding:12px 0;background:#111}
-    .socials img{width:28px;height:28px;display:block;filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 2px #fff);} /* white outline/glow */
+    /* Social icons (white outline/glow so they’re visible) */
+    .socials{
+      display:flex;justify-content:center;align-items:center;gap:14px;
+      background:#111;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+      padding:10px 12px;
+    }
+    .socials a{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:8px;background:#151515;border:1px solid rgba(255,255,255,.10);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .socials a:hover{transform:translateY(-1px);background:#1d1d1d;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+    .socials img{
+      width:22px;height:22px;display:block;
+      filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #fff); /* white outline */
+    }
+
+    /* Content wrapper */
+    .wrap{max-width:1240px;margin:18px auto;padding:0 14px}
 
     /* VOD grid */
-    .vods{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;padding:16px;max-width:1300px;margin:0 auto}
-    .vods iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+    .vods{display:grid;gap:18px;grid-template-columns:repeat(1,minmax(0,1fr))}
+    @media (min-width:600px){ .vods{grid-template-columns:repeat(2,1fr)} }
+    @media (min-width:900px){ .vods{grid-template-columns:repeat(3,1fr)} }
+    @media (min-width:1200px){ .vods{grid-template-columns:repeat(4,1fr)} }
+
+    .vod{
+      background:var(--panel);border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .vod:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+    .vod iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+
+    footer{color:var(--muted);text-align:center;padding:24px 0}
   </style>
 </head>
 <body>
-  <!-- Header banner + centered logo -->
-  <div class="hero">
-    <img class="banner" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406517652863713423/banner.jpg?ex=68a2c124&is=68a16fa4&hm=a3c64619e7265620b7d390340134b515ef2ebef34dac7dfc09c8cc41ad7eea12&" alt="King Chief Banner" />
-    <img class="center-logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief" />
-  </div>
 
-  <!-- Social icons (with white outline) -->
-  <div class="socials">
-    <a href="https://twitter.com/ChiefzBlock" target="_blank" aria-label="Twitter"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
-    <a href="https://instagram.com/kingchiefx" target="_blank" aria-label="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-    <a href="https://www.youtube.com/@KingChoif" target="_blank" aria-label="YouTube"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-    <a href="https://tiktok.com/@kingchoif" target="_blank" aria-label="TikTok"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok"></a>
-    <a href="https://discord.gg/JsUVx2XWkD" target="_blank" aria-label="Discord"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord"></a>
-    <a href="https://kick.com/kingchief" target="_blank" aria-label="Kick"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.png" alt="Kick"></a>
-  </div>
+  <!-- HERO -->
+  <header class="hero">
+    <img class="banner" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406517652863713423/banner.jpg?ex=68a2c124&is=68a16fa4&hm=a3c64619e7265620b7d390340134b515ef2ebef34dac7dfc09c8cc41ad7eea12&" alt="King Chief Banner">
+    <img class="centerLogo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief Logo">
+  </header>
 
-  <!-- VODs grid (iframe embeds) -->
-  <section class="vods">
-    <iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" title="VOD 1" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" title="VOD 2" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" title="VOD 3" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" title="VOD 4" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/cbQofKGnqeM" title="VOD 5" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" title="VOD 6" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" title="VOD 7" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" title="VOD 8" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" title="VOD 9" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/oYcgSVNOe70" title="VOD 10" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/Rx4B8hoptBU" title="VOD 11" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/unPPNeVQ3oY" title="VOD 12" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/XjRv9s5I7oc" title="VOD 13" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/G1hoHYYitV4" title="VOD 14" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/RNDgzcxIBdM" title="VOD 15" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/1-fnXPqTHCU" title="VOD 16" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/f-Tk9YtNaN8" title="VOD 17" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/oBqgCiqf1KQ" title="VOD 18" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/lUvvyfQIbfs" title="VOD 19" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/OaE2r5Q_sHo" title="VOD 20" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/MHlZhGa5iTg" title="VOD 21" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/5pf8wR_wKhM" title="VOD 22" allowfullscreen></iframe>
-  </section>
+  <!-- SOCIALS -->
+  <nav class="socials" aria-label="Social links">
+    <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener" aria-label="Twitter">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+    </a>
+    <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+    <a href="https://www.youtube.com/@KingChoif" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+    </a>
+    <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener" aria-label="TikTok">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok">
+    </a>
+    <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener" aria-label="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
+    </a>
+    <a href="https://kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick">
+      <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.png" alt="Kick">
+    </a>
+  </nav>
+
+  <!-- VODS -->
+  <main class="wrap">
+    <section class="vods" aria-label="VODs">
+      <!-- (22) Provided VODs -->
+      <div class="vod"><iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" loading="lazy" allowfullscreen title="VOD 1"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" loading="lazy" allowfullscreen title="VOD 2"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" loading="lazy" allowfullscreen title="VOD 3"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" loading="lazy" allowfullscreen title="VOD 4"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/cbQofKGnqeM" loading="lazy" allowfullscreen title="VOD 5"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" loading="lazy" allowfullscreen title="VOD 6"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" loading="lazy" allowfullscreen title="VOD 7"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" loading="lazy" allowfullscreen title="VOD 8"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" loading="lazy" allowfullscreen title="VOD 9"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/oYcgSVNOe70" loading="lazy" allowfullscreen title="VOD 10"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/Rx4B8hoptBU" loading="lazy" allowfullscreen title="VOD 11"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/unPPNeVQ3oY" loading="lazy" allowfullscreen title="VOD 12"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/XjRv9s5I7oc" loading="lazy" allowfullscreen title="VOD 13"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/G1hoHYYitV4" loading="lazy" allowfullscreen title="VOD 14"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/RNDgzcxIBdM" loading="lazy" allowfullscreen title="VOD 15"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/1-fnXPqTHCU" loading="lazy" allowfullscreen title="VOD 16"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/f-Tk9YtNaN8" loading="lazy" allowfullscreen title="VOD 17"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/oBqgCiqf1KQ" loading="lazy" allowfullscreen title="VOD 18"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/lUvvyfQIbfs" loading="lazy" allowfullscreen title="VOD 19"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/OaE2r5Q_sHo" loading="lazy" allowfullscreen title="VOD 20"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/MHlZhGa5iTg" loading="lazy" allowfullscreen title="VOD 21"></iframe></div>
+      <div class="vod"><iframe src="https://www.youtube.com/embed/5pf8wR_wKhM" loading="lazy" allowfullscreen title="VOD 22"></iframe></div>
+    </section>
+  </main>
+
+  <footer>© 2025 King Chief. All rights reserved.</footer>
 </body>
 </html>
