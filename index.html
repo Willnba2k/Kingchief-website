@@ -18,7 +18,8 @@
     }
     header img {
       width: 100%;
-      height: auto;
+      height: 220px; /* resized banner height */
+      object-fit: cover; /* crop nicely */
       display: block;
     }
     .socials {
@@ -35,8 +36,8 @@
       height: 40px;
     }
     .socials svg, .socials img {
-      width: 100%;
-      height: auto;
+      width: 28px;
+      height: 28px;
     }
     .vods {
       display: grid;
@@ -49,9 +50,7 @@
       height: 200px;
       border: none;
     }
-    .kick-logo {
-      filter: invert(42%) sepia(94%) saturate(748%) hue-rotate(82deg) brightness(92%) contrast(92%);
-    }
+    /* removed kick-logo filter to keep official green */
   </style>
 </head>
 <body>
@@ -75,7 +74,7 @@
       <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
     </a>
     <a href="https://kick.com/kingchief" target="_blank">
-      <img class="kick-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/65/Kick_logo.svg" alt="Kick">
+      <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.png" alt="Kick">
     </a>
   </div>
   <div class="vods">
