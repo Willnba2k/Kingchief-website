@@ -2,121 +2,157 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KingChief</title>
+
+  <!-- Favicon (uses your Discord GIF logo, static frame only) -->
   <link rel="icon" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" type="image/gif" />
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: white;
+      background: #0e0e10;
+      color: #fff;
+      text-align: center;
     }
+
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #181818;
-      padding: 10px 20px;
+      background: #111;
+      padding: 15px;
       position: sticky;
       top: 0;
       z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+
     header img.logo {
       height: 60px;
     }
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-    }
+
     .socials {
       display: flex;
-      gap: 12px;
+      gap: 15px;
     }
+
     .socials img {
-      height: 24px;
-      width: 24px;
-      filter: brightness(0) invert(1);
-      transition: transform 0.2s ease;
+      height: 30px;
+      transition: transform 0.2s;
     }
+
     .socials img:hover {
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
-    .banner {
-      text-align: center;
-      margin: 20px 0;
+
+    nav {
+      background: #1e1e20;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-weight: bold;
     }
-    .banner img {
-      height: 150px;
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
     }
+
+    nav a:hover {
+      color: #1db954;
+    }
+
+    .search-container {
+      margin: 20px;
+    }
+
     .vod-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
       padding: 20px;
     }
-    .vod {
-      background: #1e1e1e;
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .vod iframe {
+
+    .vod-grid iframe {
       width: 100%;
       aspect-ratio: 16 / 9;
+      border: none;
       border-radius: 8px;
-    }
-    .vod-title {
-      margin-top: 8px;
-      font-size: 14px;
-      text-align: center;
-    }
-    @media (max-width: 768px) {
-      .banner img { height: 100px; }
-      header img.logo { height: 40px; }
     }
   </style>
 </head>
 <body>
+  <!-- Header with Logo and Social Links -->
   <header>
-    <img src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" class="logo" alt="KingChief Logo"/>
-    <nav>
-      <a href="#vods">VODs</a>
-      <a href="#clips">Clips</a>
-      <a href="#links">Links</a>
-      <a href="#schedule">Schedule</a>
-    </nav>
+    <img class="logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" alt="KingChief Logo" />
+    
     <div class="socials">
-      <a href="https://www.youtube.com/@KingChoif" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube"></a>
-      <a href="https://kick.com/kingchief" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/kick.svg" alt="Kick"></a>
-      <a href="https://tiktok.com/@kingchoif" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg" alt="TikTok"></a>
-      <a href="https://twitter.com/ChiefzBlock" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitter.svg" alt="Twitter"></a>
-      <a href="https://instagram.com/kingchiefx" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"></a>
-      <a href="https://discord.gg/JsUVx2XWkD" target="_blank"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord"></a>
+      <a href="https://www.youtube.com/@KingChoif" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+      </a>
+      <a href="https://kick.com/kingchief" target="_blank">
+        <img src="https://cdn.worldvectorlogo.com/logos/kick-streaming.svg" alt="Kick" />
+      </a>
+      <a href="https://tiktok.com/@kingchoif" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046125.png" alt="TikTok" />
+      </a>
+      <a href="https://twitter.com/ChiefzBlock" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+      </a>
+      <a href="https://instagram.com/kingchiefx" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+      </a>
+      <a href="https://discord.gg/JsUVx2XWkD" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" />
+      </a>
     </div>
   </header>
 
-  <div class="banner">
-    <img src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" alt="Banner Logo"/>
+  <!-- Nav Bar -->
+  <nav>
+    <a href="#vods">VODs</a>
+    <a href="#clips">Clips</a>
+    <a href="#links">Links</a>
+    <a href="#schedule">Schedule</a>
+  </nav>
+
+  <!-- Search -->
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search VODs..." onkeyup="searchVods()" />
+    <button onclick="clearSearch()">Clear</button>
   </div>
 
+  <!-- VOD Grid -->
   <section id="vods" class="vod-grid">
-    <!-- Example VODs -->
-    <div class="vod">
-      <iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" frameborder="0" allowfullscreen></iframe>
-      <div class="vod-title">Stream 1</div>
-    </div>
-    <div class="vod">
-      <iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" frameborder="0" allowfullscreen></iframe>
-      <div class="vod-title">Stream 2</div>
-    </div>
-    <!-- Add more VODs here -->
+    <iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" title="VOD 1"></iframe>
+    <iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" title="VOD 2"></iframe>
+    <iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" title="VOD 3"></iframe>
+    <iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" title="VOD 4"></iframe>
+    <iframe src="https://www.youtube.com/embed/cbQofKGnqeM" title="VOD 5"></iframe>
+    <iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" title="VOD 6"></iframe>
+    <iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" title="VOD 7"></iframe>
+    <iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" title="VOD 8"></iframe>
+    <iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" title="VOD 9"></iframe>
+    <iframe src="https://www.youtube.com/embed/oYcgSVNOe70" title="VOD 10"></iframe>
   </section>
+
+  <script>
+    function searchVods() {
+      let input = document.getElementById("search").value.toLowerCase();
+      let vods = document.querySelectorAll(".vod-grid iframe");
+
+      vods.forEach(vod => {
+        let title = vod.getAttribute("title").toLowerCase();
+        vod.style.display = title.includes(input) ? "" : "none";
+      });
+    }
+
+    function clearSearch() {
+      document.getElementById("search").value = "";
+      searchVods();
+    }
+  </script>
 </body>
 </html>
