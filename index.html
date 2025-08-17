@@ -2,130 +2,187 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>King Chief – Official Website</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King Chief — Official Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    :root {
-      --brand:#f4c542; /* gold */
-      --bg1:#0f0f0f; --bg2:#1f1f1f; --text:#f0f0f0; --muted:#bbb; --accent:#00ffae;
+    :root{
+      --brand:#f4c542; --accent:#00ffae; --bg1:#0f0f0f; --bg2:#1f1f1f; --text:#f0f0f0; --muted:#a9a9a9;
+      --card: rgba(255,255,255,0.05);
     }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      margin: 0; padding: 0; overflow-x: hidden;
-    }
-    header { position: relative; background-color: #000; overflow: hidden; border-bottom: 4px solid var(--brand); }
-    header img.banner { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; filter: brightness(0.6); }
-    header div { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-    header h1 {
-      margin: 0;
-      display: flex; justify-content: center; align-items: center;
-    }
-    header h1 img.logo-gif {
-      max-height: 180px;
-    }
-    header p { font-size: 1.1rem; color: #fff; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Roboto,system-ui,Arial,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    section {
-      background-color: rgba(255, 255, 255, 0.04);
-      padding: 2rem; max-width: 1200px; margin: 2rem auto; border-radius: 14px;
-      box-shadow: 0 0 20px rgba(244, 197, 66, 0.2), 0 0 40px rgba(255, 255, 255, 0.08);
-      transition: transform 0.3s ease;
-    }
-    section h2 { border-bottom: 2px solid var(--brand); padding-bottom: .5rem; margin-bottom: 1.5rem; font-family: 'Orbitron', sans-serif; color: var(--brand); }
+    /* Header banner (kept) */
+    header{position:relative;overflow:hidden;border-bottom:4px solid var(--brand);background:#000}
+    header img.banner{width:100%;max-height:300px;object-fit:cover;filter:brightness(.6);display:block}
+    header .center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+    header .logo{max-height:180px}
+    @media (max-width:640px){header .logo{max-height:120px}}
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Top nav like xqc.wtf */
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.7);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .topbar .wrap{max-width:1200px;margin:0 auto;display:flex;gap:.75rem;align-items:center;justify-content:space-between;padding:.6rem 1rem}
+    .tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+    .tab{color:#ddd;border:1px solid rgba(255,255,255,.12);padding:.5rem .8rem;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));cursor:pointer;font-weight:700}
+    .tab.active,.tab:hover{color:#111;background:var(--brand);border-color:var(--brand)}
 
-    ul { list-style: none; padding: 0; }
-    ul li { margin: .75rem 0; display: flex; align-items: center; gap: .5rem; }
-    ul li i { color: var(--brand); min-width: 20px; }
+    /* Page sections */
+    main{max-width:1200px;margin:1.5rem auto;padding:0 1rem;}
 
-    .clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-    .clips iframe { width: 100%; height: 560px; border-radius: 10px; box-shadow: 0 0 12px rgba(255,255,255,0.1); border: none; }
+    .panel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem 1rem 1.25rem;margin-bottom:1rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    .panel h2{margin:0 0 .75rem 0;font-family:Orbitron,system-ui,sans-serif;color:var(--brand);border-bottom:2px solid var(--brand);padding-bottom:.4rem}
 
-    /* VODs grid */
-    .vods-fallback iframe { width: 100%; height: 600px; border: none; border-radius: 12px; box-shadow: 0 0 12px rgba(255,255,255,0.1); }
+    /* Search + filter bar */
+    .searchbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+    .searchbar input{flex:1;min-width:220px;padding:.7rem .9rem;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0c0c0c;color:var(--text)}
+    .pill{border:1px solid rgba(255,255,255,.16);padding:.5rem .7rem;border-radius:999px;background:rgba(255,255,255,.05);cursor:pointer}
 
-    footer { text-align: center; padding: 2rem; font-size: .95rem; color: #bbb; background: linear-gradient(45deg, #0d0d0d, #1a1a1a); border-top: 1px solid #333; box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05); }
+    /* VOD grid cards (thumbnail style like xqc) */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.09);border-radius:12px;overflow:hidden;transition:transform .15s ease, box-shadow .15s ease}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35)}
+    .thumb{position:relative;aspect-ratio:16/9;background:#111}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .play{position:absolute;inset:auto auto 8px 8px;background:rgba(0,0,0,.6);padding:.3rem .5rem;border-radius:8px;font-size:.85rem}
+    .meta{padding:.7rem .8rem}
+    .title{font-weight:700;line-height:1.3}
+    .sub{color:var(--muted);font-size:.9rem;margin-top:.2rem}
 
-    @media (max-width: 600px) {
-      .clips iframe { height: 400px; }
-      .vods-fallback iframe { height: 420px; }
-      header h1 img.logo-gif { max-height: 120px; }
-    }
+    footer{margin:2rem 0 3rem;text-align:center;color:#bbb}
   </style>
 </head>
 <body>
+  <!-- BANNER (kept) -->
   <header>
-    <img class="banner" src="banner.jpg" alt="King Chief Banner" loading="lazy">
-    <div>
-      <h1>
-        <img class="logo-gif" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief Logo">
-      </h1>
+    <img class="banner" src="banner.jpg" alt="Banner" />
+    <div class="center">
+      <img class="logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief" />
       <p>Official Site of Kick Streamer King Chief</p>
     </div>
   </header>
 
-  <section>
-    <h2>🎮 About</h2>
-    <p>King Chief is a 23-year-old Melbourne-based streamer, born on February 4, 2002. Known for energetic IRL content, raw gaming, and community vibes, he streams on Kick almost daily and posts his best moments on TikTok and YouTube.</p>
-  </section>
-
-  <section>
-    <h2>💚 Donate</h2>
-    <p>You can support King Chief by tipping through
-      <a href="https://streamlabs.com/willnba2k/tip" target="_blank" rel="noopener">Streamlabs</a>
-      or using the donation links in his <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">Kick profile</a>.
-    </p>
-  </section>
-
-  <section>
-    <h2>🔗 Links</h2>
-    <ul>
-      <li><i class="fa-solid fa-link"></i> <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">kick.com/kingchief</a></li>
-      <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener">@ChiefzBlock</a></li>
-      <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener">@kingchiefx</a></li>
-      <li><i class="fab fa-youtube"></i> <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener">@KingChoif</a></li>
-      <li><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank" rel="noopener">Shorts</a></li>
-      <li><i class="fab fa-tiktok"></i> <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener">@kingchoif</a></li>
-      <li><i class="fab fa-discord"></i> <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener">Join the Community</a></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>📹 Featured Clips</h2>
-    <div class="clips">
-      <iframe src="https://www.youtube.com/embed/U3o5rRRzmCU" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/C_JSab7RYNk" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/J6yTiVYjUyQ" title="King Chief Clip" loading="lazy" allowfullscreen></iframe>
+  <!-- NAV like xqc.wtf -->
+  <nav class="topbar">
+    <div class="wrap">
+      <div class="tabs">
+        <button class="tab active" data-target="#vods">VODs</button>
+        <button class="tab" data-target="#clips">Clips</button>
+        <button class="tab" data-target="#links">Links</button>
+        <button class="tab" data-target="#schedule">Schedule</button>
+      </div>
+      <div class="pill">AEST</div>
     </div>
-  </section>
+  </nav>
 
-  <!-- VODs section using @KingChoif streams -->
-  <section id="vods">
-    <h2>📺 VODs – YouTube Streams</h2>
-    <div class="vods-fallback">
-      <iframe
-        title="KingChoif – Streams"
-        src="https://www.youtube.com/embed/videoseries?list=UUBrm4pCwR3qLGl8RCYtJgIw&rel=0&modestbranding=1"
-        loading="lazy" allowfullscreen>
-      </iframe>
-      <p class="note">This playlist shows King Chief's past livestreams from his @KingChoif YouTube channel.</p>
-    </div>
-  </section>
+  <main>
+    <!-- VODs -->
+    <section id="vods" class="panel">
+      <h2>📺 VODs</h2>
+      <div class="searchbar" style="margin-bottom:.9rem">
+        <input id="search" placeholder="Search VOD titles…" />
+        <span class="pill" id="clear">Clear</span>
+      </div>
+      <div id="vodGrid" class="grid" aria-live="polite"></div>
+      <div id="vodEmpty" style="display:none;color:var(--muted);padding:.5rem .2rem">No VODs match your search.</div>
+    </section>
 
-  <section>
-    <h2>🗓️ Streaming Schedule</h2>
-    <p>King Chief usually goes live Monday–Sunday at 9:00 PM AEST. Follow on Kick for live notifications!</p>
-  </section>
+    <!-- Clips (keep simple placeholder; you can swap later) -->
+    <section id="clips" class="panel" style="display:none">
+      <h2>🎞️ Featured Clips</h2>
+      <div class="grid">
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/U3o5rRRzmCU/hqdefault.jpg" alt="Clip 1"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 1</div><div class="sub">YouTube</div></div></div>
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/C_JSab7RYNk/hqdefault.jpg" alt="Clip 2"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 2</div><div class="sub">YouTube</div></div></div>
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/J6yTiVYjUyQ/hqdefault.jpg" alt="Clip 3"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 3</div><div class="sub">YouTube</div></div></div>
+      </div>
+    </section>
 
-  <footer>
-    <p>© 2025 King Chief. All rights reserved.</p>
-  </footer>
+    <!-- Links -->
+    <section id="links" class="panel" style="display:none">
+      <h2>🔗 Links</h2>
+      <p><a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">Kick</a> · <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener">Twitter</a> · <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener">Instagram</a> · <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank" rel="noopener">Shorts</a> · <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener">TikTok</a> · <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener">Discord</a></p>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule" class="panel" style="display:none">
+      <h2>🗓️ Streaming Schedule</h2>
+      <p>Usually live daily around 9:00 PM AEST. Follow on Kick for notifications!</p>
+    </section>
+  </main>
+
+  <footer>© 2025 King Chief. All rights reserved.</footer>
+
+<script>
+// --- Data: seed with the VODs you provided ---
+const VODS = [
+  "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
+  "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
+  "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
+  "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
+];
+
+// Attempt to fetch titles via noembed; graceful fallback to ID
+async function fetchTitle(id){
+  try{
+    const r = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+    if(!r.ok) throw new Error('noembed failed');
+    const j = await r.json();
+    return j.title || id;
+  }catch{ return id; }
+}
+
+const grid = document.getElementById('vodGrid');
+const empty = document.getElementById('vodEmpty');
+
+(async function initVods(){
+  const cards = await Promise.all(VODS.map(async id => {
+    const title = await fetchTitle(id);
+    const a = document.createElement('a');
+    a.href = `https://www.youtube.com/watch?v=${id}`; a.target = '_blank'; a.rel='noopener';
+    a.className = 'card';
+    a.innerHTML = `
+      <div class="thumb">
+        <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${title.replace(/"/g,'&quot;')}">
+        <span class="play">▶️ Watch</span>
+      </div>
+      <div class="meta">
+        <div class="title">${title}</div>
+        <div class="sub">YouTube • VOD</div>
+      </div>`;
+    a.dataset.title = title.toLowerCase();
+    return a;
+  }));
+  grid.replaceChildren(...cards);
+})();
+
+// Search filter
+const input = document.getElementById('search');
+const clearBtn = document.getElementById('clear');
+function applyFilter(){
+  const q = (input.value||'').toLowerCase().trim();
+  let shown = 0;
+  [...grid.children].forEach(card=>{
+    const hit = !q || card.dataset.title.includes(q);
+    card.style.display = hit ? '' : 'none';
+    if(hit) shown++;
+  });
+  empty.style.display = shown? 'none':'block';
+}
+input.addEventListener('input', applyFilter);
+clearBtn.addEventListener('click', ()=>{ input.value=''; applyFilter(); });
+
+// Tabs
+const tabs = document.querySelectorAll('.tab');
+const sections = ['#vods','#clips','#links','#schedule'].map(s=>document.querySelector(s));
+function activate(target){
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.target===target));
+  sections.forEach(sec=>{ sec.style.display = ("#"+sec.id===target)?'block':'none'; });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+[...tabs].forEach(t=> t.addEventListener('click', ()=>activate(t.dataset.target)) );
+</script>
 </body>
 </html>
