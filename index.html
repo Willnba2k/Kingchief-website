@@ -2,157 +2,205 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KingChief</title>
-
-  <!-- Favicon (uses your Discord GIF logo, static frame only) -->
-  <link rel="icon" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" type="image/gif" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King Chief — Official Website</title>
+  <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e0e10;
-      color: #fff;
-      text-align: center;
+    :root{
+      --brand:#f4c542; --accent:#00ffae; --bg1:#0f0f0f; --bg2:#1f1f1f; --text:#f0f0f0; --muted:#a9a9a9;
+      --card: rgba(255,255,255,0.05);
     }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Roboto,system-ui,Arial,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    header {
-      background: #111;
-      padding: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    /* Header banner (kept) */
+    header{position:relative;overflow:hidden;border-bottom:4px solid var(--brand);background:#000}
+    header img.banner{width:100%;max-height:300px;object-fit:cover;filter:brightness(.6);display:block}
+    header .center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+    header .logo{max-height:200px}
+    @media (max-width:640px){header .logo{max-height:120px}}
 
-    header img.logo {
-      height: 60px;
-    }
+    /* Top nav like xqc.wtf */
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.7);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .topbar .wrap{max-width:1200px;margin:0 auto;display:flex;gap:.75rem;align-items:center;justify-content:space-between;padding:.6rem 1rem}
+    .tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+    .tab{color:#ddd;border:1px solid rgba(255,255,255,.12);padding:.5rem .8rem;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));cursor:pointer;font-weight:700}
+    .tab.active,.tab:hover{color:#111;background:var(--brand);border-color:var(--brand)}
 
-    .socials {
-      display: flex;
-      gap: 15px;
-    }
+    /* Social icons in topbar */
+    .socials{display:flex;gap:.6rem;align-items:center}
+    .socials a{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+    .socials a:hover{background:var(--brand);border-color:var(--brand)}
+    .socials i{font-size:16px;color:#ddd}
+    .socials a:hover i{color:#111}
+    @media (max-width:640px){.socials{display:none}}
 
-    .socials img {
-      height: 30px;
-      transition: transform 0.2s;
-    }
+    /* Page sections */
+    main{max-width:1200px;margin:1.5rem auto;padding:0 1rem;}
 
-    .socials img:hover {
-      transform: scale(1.1);
-    }
+    .panel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem 1rem 1.25rem;margin-bottom:1rem;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    .panel h2{margin:0 0 .75rem 0;font-family:Orbitron,system-ui,sans-serif;color:var(--brand);border-bottom:2px solid var(--brand);padding-bottom:.4rem}
 
-    nav {
-      background: #1e1e20;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      font-weight: bold;
-    }
+    /* Search + filter bar */
+    .searchbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+    .searchbar input{flex:1;min-width:220px;padding:.7rem .9rem;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0c0c0c;color:var(--text)}
+    .pill{border:1px solid rgba(255,255,255,.16);padding:.5rem .7rem;border-radius:999px;background:rgba(255,255,255,.05);cursor:pointer}
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-    }
+    /* VOD grid cards (thumbnail style like xqc) */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    @media (min-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.09);border-radius:12px;overflow:hidden;transition:transform .15s ease, box-shadow .15s ease}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35)}
+    .thumb{position:relative;aspect-ratio:16/9;background:#111}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .play{position:absolute;inset:auto auto 8px 8px;background:rgba(0,0,0,.6);padding:.3rem .5rem;border-radius:8px;font-size:.85rem}
+    .meta{padding:.7rem .8rem}
+    .title{font-weight:700;line-height:1.3}
+    .sub{color:var(--muted);font-size:.9rem;margin-top:.2rem}
 
-    nav a:hover {
-      color: #1db954;
-    }
-
-    .search-container {
-      margin: 20px;
-    }
-
-    .vod-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .vod-grid iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: none;
-      border-radius: 8px;
-    }
+    footer{margin:2rem 0 3rem;text-align:center;color:#bbb}
   </style>
 </head>
 <body>
-  <!-- Header with Logo and Social Links -->
+  <!-- BANNER (kept) -->
   <header>
-    <img class="logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" alt="KingChief Logo" />
-    
-    <div class="socials">
-      <a href="https://www.youtube.com/@KingChoif" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-      </a>
-      <a href="https://kick.com/kingchief" target="_blank">
-        <img src="https://cdn.worldvectorlogo.com/logos/kick-streaming.svg" alt="Kick" />
-      </a>
-      <a href="https://tiktok.com/@kingchoif" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046125.png" alt="TikTok" />
-      </a>
-      <a href="https://twitter.com/ChiefzBlock" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
-      </a>
-      <a href="https://instagram.com/kingchiefx" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
-      </a>
-      <a href="https://discord.gg/JsUVx2XWkD" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" />
-      </a>
+    <img class="banner" src="banner.jpg" alt="Banner" />
+    <div class="center">
+      <img class="logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief" />
+      <p>Official Site of Kick Streamer King Chief</p>
     </div>
   </header>
 
-  <!-- Nav Bar -->
-  <nav>
-    <a href="#vods">VODs</a>
-    <a href="#clips">Clips</a>
-    <a href="#links">Links</a>
-    <a href="#schedule">Schedule</a>
+  <!-- NAV like xqc.wtf -->
+  <nav class="topbar">
+    <div class="wrap">
+      <div class="tabs">
+        <button class="tab active" data-target="#vods">VODs</button>
+        <button class="tab" data-target="#clips">Clips</button>
+        <button class="tab" data-target="#links">Links</button>
+        <button class="tab" data-target="#schedule">Schedule</button>
+      </div>
+      <div class="socials">
+        <a href="https://www.kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick"><img src="https://kick.com/img/kick-logo.svg" alt="Kick" style="width:18px;height:18px;filter:invert(85%);"></a>
+        <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+      </div>
+      <div class="pill">AEST</div>
+    </div>
   </nav>
 
-  <!-- Search -->
-  <div class="search-container">
-    <input type="text" id="search" placeholder="Search VODs..." onkeyup="searchVods()" />
-    <button onclick="clearSearch()">Clear</button>
-  </div>
+  <main>
+    <!-- VODs -->
+    <section id="vods" class="panel">
+      <h2>📺 VODs</h2>
+      <div class="searchbar" style="margin-bottom:.9rem">
+        <input id="search" placeholder="Search VOD titles…" />
+        <span class="pill" id="clear">Clear</span>
+      </div>
+      <div id="vodGrid" class="grid" aria-live="polite"></div>
+      <div id="vodEmpty" style="display:none;color:var(--muted);padding:.5rem .2rem">No VODs match your search.</div>
+    </section>
 
-  <!-- VOD Grid -->
-  <section id="vods" class="vod-grid">
-    <iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" title="VOD 1"></iframe>
-    <iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" title="VOD 2"></iframe>
-    <iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" title="VOD 3"></iframe>
-    <iframe src="https://www.youtube.com/embed/AkNPnPjgqBE" title="VOD 4"></iframe>
-    <iframe src="https://www.youtube.com/embed/cbQofKGnqeM" title="VOD 5"></iframe>
-    <iframe src="https://www.youtube.com/embed/9NwUa_GqYxQ" title="VOD 6"></iframe>
-    <iframe src="https://www.youtube.com/embed/fkSVA6hLPIA" title="VOD 7"></iframe>
-    <iframe src="https://www.youtube.com/embed/ip9AAUY-X_s" title="VOD 8"></iframe>
-    <iframe src="https://www.youtube.com/embed/5Hhg5_0VSEQ" title="VOD 9"></iframe>
-    <iframe src="https://www.youtube.com/embed/oYcgSVNOe70" title="VOD 10"></iframe>
-  </section>
+    <!-- Clips -->
+    <section id="clips" class="panel" style="display:none">
+      <h2>🎞️ Featured Clips</h2>
+      <div class="grid">
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/U3o5rRRzmCU/hqdefault.jpg" alt="Clip 1"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 1</div><div class="sub">YouTube</div></div></div>
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/C_JSab7RYNk/hqdefault.jpg" alt="Clip 2"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 2</div><div class="sub">YouTube</div></div></div>
+        <div class="card"><div class="thumb"><img src="https://img.youtube.com/vi/J6yTiVYjUyQ/hqdefault.jpg" alt="Clip 3"><span class="play">▶️</span></div><div class="meta"><div class="title">Clip 3</div><div class="sub">YouTube</div></div></div>
+      </div>
+    </section>
 
-  <script>
-    function searchVods() {
-      let input = document.getElementById("search").value.toLowerCase();
-      let vods = document.querySelectorAll(".vod-grid iframe");
+    <!-- Links -->
+    <section id="links" class="panel" style="display:none">
+      <h2>🔗 Links</h2>
+      <p><a href="https://www.kick.com/kingchief" target="_blank" rel="noopener">Kick</a> · <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener">Twitter</a> · <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener">Instagram</a> · <a href="https://youtube.com/@KingChoif" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.youtube.com/@KingChoif/shorts" target="_blank" rel="noopener">Shorts</a> · <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener">TikTok</a> · <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener">Discord</a></p>
+    </section>
 
-      vods.forEach(vod => {
-        let title = vod.getAttribute("title").toLowerCase();
-        vod.style.display = title.includes(input) ? "" : "none";
-      });
-    }
+    <!-- Schedule -->
+    <section id="schedule" class="panel" style="display:none">
+      <h2>🗓️ Streaming Schedule</h2>
+      <p>Usually live daily around 9:00 PM AEST. Follow on Kick for notifications!</p>
+    </section>
+  </main>
 
-    function clearSearch() {
-      document.getElementById("search").value = "";
-      searchVods();
-    }
-  </script>
+  <footer>© 2025 King Chief. All rights reserved.</footer>
+
+<script>
+// --- Data: seed with the VODs you provided ---
+const VODS = [
+  "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
+  "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
+  "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
+  "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
+];
+
+// Attempt to fetch titles via noembed; graceful fallback to ID
+async function fetchTitle(id){
+  try{
+    const r = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+    if(!r.ok) throw new Error('noembed failed');
+    const j = await r.json();
+    return j.title || id;
+  }catch{ return id; }
+}
+
+const grid = document.getElementById('vodGrid');
+const empty = document.getElementById('vodEmpty');
+
+(async function initVods(){
+  const cards = await Promise.all(VODS.map(async id => {
+    const title = await fetchTitle(id);
+    const a = document.createElement('a');
+    a.href = `https://www.youtube.com/watch?v=${id}`; a.target = '_blank'; a.rel='noopener';
+    a.className = 'card';
+    a.innerHTML = `
+      <div class="thumb">
+        <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${title.replace(/"/g,'&quot;')}">
+        <span class="play">▶️ Watch</span>
+      </div>
+      <div class="meta">
+        <div class="title">${title}</div>
+        <div class="sub">YouTube • VOD</div>
+      </div>`;
+    a.dataset.title = title.toLowerCase();
+    return a;
+  }));
+  grid.replaceChildren(...cards);
+})();
+
+// Search filter
+const input = document.getElementById('search');
+const clearBtn = document.getElementById('clear');
+function applyFilter(){
+  const q = (input.value||'').toLowerCase().trim();
+  let shown = 0;
+  [...grid.children].forEach(card=>{
+    const hit = !q || card.dataset.title.includes(q);
+    card.style.display = hit ? '' : 'none';
+    if(hit) shown++;
+  });
+  empty.style.display = shown? 'none':'block';
+}
+input.addEventListener('input', applyFilter);
+clearBtn.addEventListener('click', ()=>{ input.value=''; applyFilter(); });
+
+// Tabs
+const tabs = document.querySelectorAll('.tab');
+const sections = ['#vods','#clips','#links','#schedule'].map(s=>document.querySelector(s));
+function activate(target){
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.target===target));
+  sections.forEach(sec=>{ sec.style.display = ("#"+sec.id===target)?'block':'none'; });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+[...tabs].forEach(t=> t.addEventListener('click', ()=>activate(t.dataset.target)) );
+</script>
 </body>
 </html>
