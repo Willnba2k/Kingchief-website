@@ -1,131 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KingChief</title>
-  <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King Chief — Official Website</title>
+
+  <!-- Favicon = your GIF logo (full URL incl. query) -->
+  <link rel="icon" type="image/gif" href="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&"/>
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://api.rss2json.com">
+  <link rel="dns-prefetch" href="https://api.rss2json.com">
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
-      text-align: center;
+    :root{
+      --bg:#0f0f10; --panel:#17181b; --text:#fff; --muted:#b9b9b9;
+      --brand:#f4c542;
     }
-    header {
-      position: relative;
-      width: 100%;
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+    /* HERO: banner with centered GIF logo */
+    .hero{position:relative;width:100%;height:200px;overflow:hidden;border-bottom:4px solid var(--brand);}
+    .hero img.banner{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+    .hero img.centerLogo{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      height:130px;width:auto;filter:drop-shadow(0 0 6px rgba(0,0,0,.6));
     }
-    header img.banner {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
+    @media (max-width:640px){ .hero{height:180px} .hero img.centerLogo{height:100px} }
+
+    /* Social icons (white outline/glow) */
+    .socials{
+      display:flex;justify-content:center;align-items:center;gap:14px;
+      background:#111;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+      padding:10px 12px;
     }
-    header img.logo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 100px;
-      border: 3px solid #fff;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.4);
+    .socials a{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:8px;background:#151515;border:1px solid rgba(255,255,255,.10);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
     }
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
+    .socials a:hover{transform:translateY(-1px);background:#1d1d1d;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+    .socials img{width:22px;height:22px;display:block;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #fff)}
+
+    /* Content wrapper */
+    .wrap{max-width:1240px;margin:18px auto;padding:0 14px}
+
+    /* VOD grid */
+    .vods{display:grid;gap:18px;grid-template-columns:repeat(1,minmax(0,1fr))}
+    @media (min-width:600px){ .vods{grid-template-columns:repeat(2,1fr)} }
+    @media (min-width:900px){ .vods{grid-template-columns:repeat(3,1fr)} }
+    @media (min-width:1200px){ .vods{grid-template-columns:repeat(4,1fr)} }
+
+    .vod{
+      background:var(--panel);border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25);
+      transition:transform .15s ease, box-shadow .15s ease;
     }
-    .socials a img {
-      width: 32px;
-      height: 32px;
-      border: 2px solid white;
-      border-radius: 8px;
-      background: rgba(0,0,0,0.4);
-      padding: 4px;
+    .vod:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+
+    .thumb{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}
+    .thumb picture,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
+    .playBadge{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:70px;height:70px;border-radius:50%;background:rgba(0,0,0,.55);
+      display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.8)
     }
-    .vods, .auto-vods {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 20px;
+    .playBadge svg{width:30px;height:30px;fill:#fff;margin-left:3px}
+
+    .meta{padding:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+    .btn{
+      background:#2a2b30;color:#fff;border:1px solid rgba(255,255,255,.12);
+      border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;
+      transition:background .15s ease, transform .15s ease;
     }
-    .vods iframe, .auto-vods iframe {
-      width: 100%;
-      height: 200px;
-      border: none;
+    .btn:hover{background:#34363c;transform:translateY(-1px)}
+    .btn:active{transform:none}
+
+    /* Lightbox modal (not full screen) */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);z-index:1000;padding:20px}
+    .modal.show{display:flex}
+    .modal-inner{
+      position:relative;width:90vw;max-width:1100px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.08) inset;
     }
-    .video-card {
-      background: #222;
-      border-radius: 8px;
-      overflow: hidden;
+    .modal iframe{width:100%;height:100%;border:0;display:block}
+    .close{
+      position:absolute;top:-46px;right:0;background:#fff;color:#000;border:0;border-radius:999px;
+      width:38px;height:38px;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)
     }
-    .video-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .video-card p {
-      padding: 10px;
-      font-size: 14px;
-      margin: 0;
-    }
+    @media (max-width:640px){ .modal-inner{width:96vw} .close{top:-44px} }
+
+    h2{max-width:1240px;margin:20px auto 8px;padding:0 14px;color:#f4c542;font-weight:700}
+    footer{color:var(--muted);text-align:center;padding:24px 0}
   </style>
 </head>
 <body>
-  <header>
-    <img class="banner" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406517652863713423/banner.jpg" alt="KingChief Banner">
-    <img class="logo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif" alt="KingChief Logo">
+
+  <!-- HERO -->
+  <header class="hero">
+    <!-- EXACT banner URL with query params -->
+    <img class="banner" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406517652863713423/banner.jpg?ex=68a2c124&is=68a16fa4&hm=a3c64619e7265620b7d390340134b515ef2ebef34dac7dfc09c8cc41ad7eea12&" alt="King Chief Banner">
+    <!-- EXACT logo URL with query params -->
+    <img class="centerLogo" src="https://cdn.discordapp.com/attachments/1185872697671024702/1406499749670027314/Untitled_design_12.gif?ex=68a2b077&is=68a15ef7&hm=d2160f1e0978ab033cdb21cddcd391aedf4b4ce6311e4eec72b22e4a6654ce20&" alt="King Chief Logo">
   </header>
 
-  <div class="socials">
-    <a href="https://twitter.com/ChiefzBlock" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
-    <a href="https://instagram.com/kingchiefx" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-    <a href="https://www.youtube.com/@KingChoif" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-    <a href="https://tiktok.com/@kingchoif" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok"></a>
-    <a href="https://discord.gg/JsUVx2XWkD" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord"></a>
-    <a href="https://kick.com/kingchief" target="_blank"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.png" alt="Kick"></a>
+  <!-- SOCIALS -->
+  <nav class="socials" aria-label="Social links">
+    <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener" aria-label="Twitter">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+    </a>
+    <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+    <a href="https://www.youtube.com/@KingChoif" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+    </a>
+    <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener" aria-label="TikTok">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok">
+    </a>
+    <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener" aria-label="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
+    </a>
+    <a href="https://kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick">
+      <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/kick-streaming-platform-logo-icon.png" alt="Kick">
+    </a>
+  </nav>
+
+  <!-- AUTO + MANUAL VODS -->
+  <h2>🔥 Latest VODs</h2>
+  <main class="wrap">
+    <section id="vodGrid" class="vods" aria-label="VODs"></section>
+  </main>
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="ytModal" class="modal" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal-inner">
+      <button class="close" aria-label="Close">✕</button>
+      <iframe id="ytFrame" src="" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" allowfullscreen playsinline></iframe>
+    </div>
   </div>
 
-  <h2>📺 Archive VODs</h2>
-  <div class="vods">
-    <iframe src="https://www.youtube.com/embed/-mYf8b-Y1cY" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/gN5cOgRUrmw" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/kizZ4EX8vSw" allowfullscreen></iframe>
-  </div>
-
-  <h2>🔥 Latest VODs (Auto-updating)</h2>
-  <div class="auto-vods" id="autoVods"></div>
+  <footer>© 2025 King Chief. All rights reserved.</footer>
 
   <script>
-    async function loadVods() {
-      try {
-        const channelId = "UCra4-XY3pIPqfIz1UOdxVqg"; // KingChiefVodz channel ID
-        const response = await fetch(`https://rss2json.com/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
-        const data = await response.json();
-        const vodsContainer = document.getElementById("autoVods");
+    // ---------- CONFIG ----------
+    // Auto-updating channel: @KingChiefVodz (channel_id confirmed)
+    const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw";
+    const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
+    const FEED_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED_URL);
+    const MAX_AUTO = 24; // number of newest items to fetch
 
-        data.items.slice(0, 8).forEach(video => {
-          const videoId = video.link.split("v=")[1];
-          const thumb = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-          const card = document.createElement("div");
-          card.className = "video-card";
-          card.innerHTML = `
-            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-              <img src="${thumb}" alt="${video.title}">
-            </a>
-            <p>${video.title}</p>
-          `;
-          vodsContainer.appendChild(card);
-        });
-      } catch (err) {
-        console.error("Error loading VODs:", err);
-      }
+    // Your old manual VODs (keep all 22)
+    const OLD_VIDS = [
+      "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
+      "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
+      "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
+      "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
+    ];
+
+    // ---------- DOM ----------
+    const grid  = document.getElementById('vodGrid');
+    const modal = document.getElementById('ytModal');
+    const frame = document.getElementById('ytFrame');
+    const closeBtn = modal.querySelector('.close');
+
+    // Build one VOD card
+    function addCard(id, title){
+      if(!id) return;
+      const card  = document.createElement('div'); card.className = 'vod';
+      const thumb = document.createElement('div'); thumb.className = 'thumb';
+
+      // Robust thumbnail with fallbacks (WebP maxres → JPG maxres → HQ JPG)
+      const picture = document.createElement('picture');
+
+      const srcWebp = document.createElement('source');
+      srcWebp.type = 'image/webp';
+      srcWebp.srcset = `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
+
+      const srcJpgMax = document.createElement('source');
+      srcJpgMax.type = 'image/jpeg';
+      srcJpgMax.srcset = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
+      const img = document.createElement('img');
+      img.alt = title || 'VOD';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+      img.onerror = function(){ this.onerror=null; this.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`; };
+      img.style.opacity = '0'; img.style.transition = 'opacity .25s ease';
+      img.addEventListener('load', ()=> img.style.opacity = '1');
+
+      picture.append(srcWebp, srcJpgMax, img);
+      thumb.appendChild(picture);
+
+      const play = document.createElement('div');
+      play.className = 'playBadge';
+      play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+      thumb.appendChild(play);
+
+      // Click thumbnail to open modal
+      thumb.addEventListener('click', ()=> openVideo(id));
+
+      // Buttons row
+      const meta = document.createElement('div'); meta.className = 'meta';
+      const openBtn = document.createElement('button'); openBtn.className = 'btn'; openBtn.textContent = 'Play';
+      openBtn.addEventListener('click', ()=> openVideo(id));
+
+      const shareBtn = document.createElement('button'); shareBtn.className = 'btn'; shareBtn.textContent = 'Share';
+      shareBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const url = `https://youtu.be/${id}`;
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: title || 'King Chief VOD', url });
+          } else {
+            await navigator.clipboard.writeText(url);
+            alert('Copied: ' + url);
+          }
+        } catch(_) {}
+      });
+
+      meta.append(openBtn, shareBtn);
+      card.append(thumb, meta);
+      grid.appendChild(card);
     }
-    loadVods();
+
+    // Modal open/close
+    function openVideo(id){
+      frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      frame.src = '';
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    // Build the grid: auto (new) first, then manual (old), deduped
+    (async function buildVods(){
+      const seen = new Set();
+
+      // 1) Try to load newest uploads from the channel
+      try {
+        const res = await fetch(FEED_API, { cache: "no-store" });
+        const data = await res.json();
+        const items = (data.items || []).slice(0, MAX_AUTO);
+        for (const item of items) {
+          const id = (item.link && item.link.split("v=")[1]) || "";
+          if (!id || seen.has(id)) continue;
+          seen.add(id);
+          addCard(id, item.title || 'VOD');
+        }
+      } catch (e) {
+        console.warn('Auto feed failed (showing manual only):', e);
+      }
+
+      // 2) Add all your manual VODs
+      for (const id of OLD_VIDS) {
+        if (seen.has(id)) continue;
+        seen.add(id);
+        addCard(id, 'VOD');
+      }
+    })();
   </script>
 </body>
 </html>
