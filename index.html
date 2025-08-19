@@ -1,124 +1,274 @@
-<script>
-  // --- CONFIG (keep yours as-is above this) ---
-  const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw";
-  const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
-  const FEED_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED_URL);
-  const MAX_AUTO = 24;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>King Chief — Official Website</title>
 
-  const OLD_VIDS = [
-    "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
-    "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
-    "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
-    "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
-  ];
+  <!-- Favicon -->
+  <link rel="icon" type="image/gif" href="https://i.ibb.co/4rrGbZt/Untitled-design-12.gif" />
 
-  const grid  = document.getElementById('vodGrid');
-  const modal = document.getElementById('ytModal');
-  const frame = document.getElementById('ytFrame');
-  const closeBtn = modal.querySelector('.close');
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://i.ytimg.com"><link rel="dns-prefetch" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://api.rss2json.com"><link rel="dns-prefetch" href="https://api.rss2json.com">
 
-  function openVideo(id){
-    frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(){
-    modal.classList.remove('show');
-    frame.src = '';
-    document.body.style.overflow = '';
-  }
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-  window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-
-  // Fetch a title for manual IDs (no API key; graceful fallback to ID)
-  async function fetchTitle(id){
-    try{
-      const r = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
-      if(!r.ok) throw new Error('noembed');
-      const j = await r.json();
-      return (j && j.title) ? j.title : id;
-    }catch{
-      return id;
+  <style>
+    :root{
+      --bg:#0f0f10; --panel:#17181b; --text:#fff; --muted:#b9b9b9; --brand:#f4c542;
     }
-  }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-  // Build one card (now with a .cap title under the thumbnail)
-  function addCard(id, titleText){
-    const card  = document.createElement('div'); card.className = 'vod';
+    /* HERO (banner + centered logo) */
+    header.hero{position:relative;width:100%;height:220px;overflow:hidden;border-bottom:4px solid var(--brand)}
+    header.hero::before{
+      content:"";position:absolute;inset:0;display:block;background:url('https://i.ibb.co/1YPvqNQJ/banner-jpeg.png') center/cover no-repeat;
+    }
+    .centerLogo{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:140px;height:auto;border-radius:50%;border:4px solid #fff;background:#000;box-shadow:0 6px 24px rgba(0,0,0,.45)
+    }
+    @media (max-width:640px){ header.hero{height:180px} .centerLogo{width:110px} }
 
-    const thumb = document.createElement('div'); thumb.className = 'thumb';
-    const picture = document.createElement('picture');
+    /* Socials */
+    .socials{
+      display:flex;justify-content:center;align-items:center;gap:16px;
+      padding:14px 12px;background:#111;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .socials a{
+      display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;
+      background:#161616;border:1px solid rgba(255,255,255,.12);transition:.15s transform,.15s box-shadow
+    }
+    .socials a:hover{transform:translateY(-1px);box-shadow:0 0 0 3px rgba(255,255,255,.22)}
+    .socials img,.socials svg{width:22px;height:22px;filter:drop-shadow(0 0 1px #fff)}
+    .kick svg{width:22px;height:22px}
 
-    const s1 = document.createElement('source'); s1.type='image/webp';
-    s1.srcset = `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
-    const s2 = document.createElement('source'); s2.type='image/jpeg';
-    s2.srcset = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+    /* Layout */
+    .wrap{max-width:1240px;margin:18px auto;padding:0 14px}
+    h1{margin:16px 0 0;text-align:center}
+    h2{max-width:1240px;margin:14px auto 8px;padding:0 14px;color:var(--brand);font-weight:700}
 
-    const img = document.createElement('img');
-    img.alt = titleText || 'VOD';
-    img.loading='lazy'; img.decoding='async';
-    img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-    img.onerror = function(){ this.onerror=null; this.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`; };
-    img.style.opacity='0'; img.style.transition='opacity .25s ease';
-    img.addEventListener('load', ()=> img.style.opacity='1');
+    /* VOD grid */
+    .vods{display:grid;gap:18px;grid-template-columns:repeat(1,minmax(0,1fr))}
+    @media (min-width:600px){ .vods{grid-template-columns:repeat(2,1fr)} }
+    @media (min-width:900px){ .vods{grid-template-columns:repeat(3,1fr)} }
+    @media (min-width:1200px){ .vods{grid-template-columns:repeat(4,1fr)} }
 
-    picture.append(s1,s2,img);
-    thumb.appendChild(picture);
+    .vod{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:.15s transform,.15s box-shadow}
+    .vod:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+    .thumb{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}
+    .thumb picture,.thumb img{width:100%;height:100%;display:block;object-fit:cover}
+    .playBadge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.85)}
+    .playBadge svg{width:32px;height:32px;fill:#fff;margin-left:3px}
 
-    const play = document.createElement('div');
-    play.className = 'playBadge';
-    play.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-    thumb.appendChild(play);
-    thumb.addEventListener('click', ()=> openVideo(id));
+    /* Title under thumbnail */
+    .cap {
+      padding: 10px 12px 0;
+      font-size: 14px;
+      line-height: 1.35;
+      color: #e9e9e9;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 3.7em; /* keeps rows even */
+    }
 
-    // NEW: caption under thumbnail
-    const cap = document.createElement('div');
-    cap.className = 'cap';
-    cap.textContent = titleText || 'VOD';
+    .meta{padding:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+    .btn{background:#2a2b30;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px}
+    .btn:hover{background:#34363c}
 
-    const meta = document.createElement('div'); meta.className = 'meta';
-    const openBtn = document.createElement('button'); openBtn.className='btn'; openBtn.textContent='Play';
-    openBtn.addEventListener('click', ()=> openVideo(id));
-    const shareBtn = document.createElement('button'); shareBtn.className='btn'; shareBtn.textContent='Share';
-    shareBtn.addEventListener('click', async (e)=>{
-      e.stopPropagation();
-      const url=`https://youtu.be/${id}`;
+    /* Modal popout */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);z-index:1000;padding:20px}
+    .modal.show{display:flex}
+    .modal-inner{position:relative;width:90vw;max-width:1100px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.08) inset}
+    .modal iframe{width:100%;height:100%;border:0;display:block}
+    .close{position:absolute;top:-46px;right:0;background:#fff;color:#000;border:0;border-radius:999px;width:38px;height:38px;font-size:20px;font-weight:700;cursor:pointer}
+    @media (max-width:640px){ .modal-inner{width:96vw} .close{top:-44px} }
+
+    footer{color:var(--muted);text-align:center;padding:24px 0}
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <img class="centerLogo" src="https://i.ibb.co/4rrGbZt/Untitled-design-12.gif" alt="King Chief Logo">
+  </header>
+
+  <!-- Title -->
+  <h1>Welcome to KingChief's Official Website</h1>
+
+  <!-- Socials (incl. Kick) -->
+  <nav class="socials" aria-label="Social links">
+    <a href="https://twitter.com/ChiefzBlock" target="_blank" rel="noopener" aria-label="Twitter">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+    </a>
+    <a href="https://instagram.com/kingchiefx" target="_blank" rel="noopener" aria-label="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+    <a href="https://www.youtube.com/@KingChoif" target="_blank" rel="noopener" aria-label="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+    </a>
+    <a href="https://tiktok.com/@kingchoif" target="_blank" rel="noopener" aria-label="TikTok">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok">
+    </a>
+    <a href="https://discord.gg/JsUVx2XWkD" target="_blank" rel="noopener" aria-label="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord">
+    </a>
+    <a class="kick" href="https://kick.com/kingchief" target="_blank" rel="noopener" aria-label="Kick">
+      <!-- Kick "K" in official green -->
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#53FC18" d="M4 4h5v6l4-6h7l-7 8 7 8h-7l-4-6v6H4z"/></svg>
+    </a>
+  </nav>
+
+  <h2>Latest VODs</h2>
+  <main class="wrap">
+    <section id="vodGrid" class="vods" aria-label="VODs">
+      <p id="loading" style="color:#bbb">Loading videos…</p>
+    </section>
+  </main>
+
+  <!-- Pop-out player -->
+  <div id="ytModal" class="modal" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal-inner">
+      <button class="close" aria-label="Close">✕</button>
+      <iframe id="ytFrame" src="" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" allowfullscreen playsinline></iframe>
+    </div>
+  </div>
+
+  <footer>© 2025 King Chief. All rights reserved.</footer>
+
+  <script>
+    // --- CONFIG ---
+    // Auto-updating channel: @KingChiefVodz
+    const CHANNEL_ID = "UC_3hI1O0YCF-LX0bpFzOkOw";
+    const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID;
+    const FEED_API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED_URL);
+    const MAX_AUTO = 24;
+
+    // Keep your old manual VODs (deduped)
+    const OLD_VIDS = [
+      "-mYf8b-Y1cY","gN5cOgRUrmw","kizZ4EX8vSw","AkNPnPjgqBE","cbQofKGnqeM","9NwUa_GqYxQ",
+      "fkSVA6hLPIA","ip9AAUY-X_s","5Hhg5_0VSEQ","oYcgSVNOe70","Rx4B8hoptBU","unPPNeVQ3oY",
+      "XjRv9s5I7oc","G1hoHYYitV4","RNDgzcxIBdM","1-fnXPqTHCU","f-Tk9YtNaN8","oBqgCiqf1KQ",
+      "lUvvyfQIbfs","OaE2r5Q_sHo","MHlZhGa5iTg","5pf8wR_wKhM"
+    ];
+
+    const grid  = document.getElementById('vodGrid');
+    const loading = document.getElementById('loading');
+    const modal = document.getElementById('ytModal');
+    const frame = document.getElementById('ytFrame');
+    const closeBtn = modal.querySelector('.close');
+
+    function openVideo(id){
+      frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&playsinline=1`;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      frame.src = '';
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    // Fetch a title for manual IDs (no API key; fallback to ID)
+    async function fetchTitle(id){
       try{
-        if(navigator.share){ await navigator.share({ title: cap.textContent, url }); }
-        else { await navigator.clipboard.writeText(url); alert('Copied: '+url); }
-      }catch(_){}
-    });
-    meta.append(openBtn, shareBtn);
-
-    card.append(thumb, cap, meta);
-    grid.appendChild(card);
-  }
-
-  (async function buildVods(){
-    const seen = new Set();
-
-    // Auto (new uploads with real titles)
-    try{
-      const res = await fetch(FEED_API, { cache:'no-store' });
-      const data = await res.json();
-      const items = (data.items || []).slice(0, MAX_AUTO);
-      for(const item of items){
-        const id = (item.link && item.link.split('v=')[1]) || '';
-        if(!id || seen.has(id)) continue;
-        seen.add(id);
-        addCard(id, item.title || 'VOD');
+        const r = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+        if(!r.ok) throw new Error('noembed');
+        const j = await r.json();
+        return (j && j.title) ? j.title : id;
+      }catch{
+        return id;
       }
-    }catch(e){
-      console.warn('Feed error:', e);
     }
 
-    // Manual (fetch titles via noembed; dedupe)
-    for(const id of OLD_VIDS){
-      if(seen.has(id)) continue;
-      seen.add(id);
-      const t = await fetchTitle(id);
-      addCard(id, t);
+    // Build one card (with caption)
+    function addCard(id, titleText){
+      const card  = document.createElement('div'); card.className = 'vod';
+
+      const thumb = document.createElement('div'); thumb.className = 'thumb';
+      const picture = document.createElement('picture');
+
+      const s1 = document.createElement('source'); s1.type='image/webp';
+      s1.srcset = `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
+      const s2 = document.createElement('source'); s2.type='image/jpeg';
+      s2.srcset = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
+      const img = document.createElement('img');
+      img.alt = titleText || 'VOD';
+      img.loading='lazy'; img.decoding='async';
+      img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+      img.onerror = function(){ this.onerror=null; this.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`; };
+      img.style.opacity='0'; img.style.transition='opacity .25s ease';
+      img.addEventListener('load', ()=> img.style.opacity='1');
+
+      picture.append(s1,s2,img);
+      thumb.appendChild(picture);
+
+      const play = document.createElement('div');
+      play.className = 'playBadge';
+      play.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+      thumb.appendChild(play);
+      thumb.addEventListener('click', ()=> openVideo(id));
+
+      const cap = document.createElement('div');
+      cap.className = 'cap';
+      cap.textContent = titleText || 'VOD';
+
+      const meta = document.createElement('div'); meta.className = 'meta';
+      const openBtn = document.createElement('button'); openBtn.className='btn'; openBtn.textContent='Play';
+      openBtn.addEventListener('click', ()=> openVideo(id));
+      const shareBtn = document.createElement('button'); shareBtn.className='btn'; shareBtn.textContent='Share';
+      shareBtn.addEventListener('click', async (e)=>{
+        e.stopPropagation();
+        const url=`https://youtu.be/${id}`;
+        try{
+          if(navigator.share){ await navigator.share({ title: cap.textContent, url }); }
+          else { await navigator.clipboard.writeText(url); alert('Copied: '+url); }
+        }catch(_){}
+      });
+      meta.append(openBtn, shareBtn);
+
+      card.append(thumb, cap, meta);
+      grid.appendChild(card);
     }
-  })();
-</script>
+
+    (async function buildVods(){
+      const seen = new Set();
+
+      // Auto (new uploads with titles)
+      try{
+        const res = await fetch(FEED_API, { cache:'no-store' });
+        const data = await res.json();
+        const items = (data.items || []).slice(0, MAX_AUTO);
+        if (loading) loading.remove();
+        for(const item of items){
+          const id = (item.link && item.link.split('v=')[1]) || '';
+          if(!id || seen.has(id)) continue;
+          seen.add(id);
+          addCard(id, item.title || 'VOD');
+        }
+      }catch(e){
+        if (loading) loading.textContent = "Couldn't load channel feed. Showing archived videos only.";
+        console.warn('Feed error:', e);
+      }
+
+      // Manual (archived) — fetch titles and dedupe
+      for(const id of OLD_VIDS){
+        if(seen.has(id)) continue;
+        seen.add(id);
+        const t = await fetchTitle(id);
+        addCard(id, t);
+      }
+
+      if (loading && grid.children.length) loading.remove();
+      if (!grid.children.length) grid.innerHTML = "<p style='color:#bbb'>No videos to show yet.</p>";
+    })();
+  </script>
+</body>
+</html>
